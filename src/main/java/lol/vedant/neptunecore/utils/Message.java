@@ -4,9 +4,17 @@ import net.md_5.bungee.config.Configuration;
 
 public enum Message {
 
+    //General stuff
     PREFIX("GENERAL.PREFIX"),
+    PLAYER_ONLY_COMMAND("GENERAL.PLAYER_ONLY_COMMAND"),
+
+    //Staff chat
     STAFF_CHAT_PREFIX("STAFF_CHAT.PREFIX"),
-    STAFF_CHAT_FORMAT("STAFF_CHAT.FORMAT");
+    STAFF_CHAT_FORMAT("STAFF_CHAT.FORMAT"),
+
+    //Admin chat
+    ADMIN_CHAT_FORMAT("ADMIN_CHAT.FORMAT"),
+    ADMIN_CHAT_PREFIX("ADMIN_CHAT.PREFIX");
 
     private static net.md_5.bungee.config.Configuration config;
     private final String path;
@@ -27,9 +35,11 @@ public enum Message {
 
         String prefix = config.getString(PREFIX.getPath());
         String sc_prefix = config.getString(STAFF_CHAT_PREFIX.getPath());
+        String ac_prefix = config.getString(ADMIN_CHAT_PREFIX.getPath());
         return message
                 .replace("{prefix}", prefix != null && !prefix.isEmpty() ? prefix : "")
-                .replace("{sc_prefix}", sc_prefix != null && !sc_prefix.isEmpty() ? sc_prefix : "");
+                .replace("{sc_prefix}", sc_prefix != null && !sc_prefix.isEmpty() ? sc_prefix : "")
+                .replace("{ac_prefix}", ac_prefix != null && !ac_prefix.isEmpty() ? ac_prefix : "");
     }
 
     public String getPath() {

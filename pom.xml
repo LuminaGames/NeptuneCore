@@ -64,5 +64,10 @@
             <version>1.20-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>io.github.vedantmulay</groupId>
+            <artifactId>NeptuneAPI</artifactId>
+            <version>1.0.6</version>
+        </dependency>
     </dependencies>
 </project>

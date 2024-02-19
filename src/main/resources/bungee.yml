@@ -1,3 +1,5 @@
 name: NeptuneCore
 version: '${project.version}'
 main: lol.vedant.neptunecore.NeptuneCore
+author: "COMPHACK"
+description: "The all in one plugin for your proxy server needs!"
