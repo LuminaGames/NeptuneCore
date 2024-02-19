@@ -1,0 +1,3 @@
+name: NeptuneCore
+version: '${project.version}'
+main: lol.vedant.neptunecore.NeptuneCore
