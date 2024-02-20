@@ -34,8 +34,14 @@ public class AdminChatManager {
     public static void toggleAdminChat(ProxiedPlayer player) {
         if(isEnabled(player)) {
             adminChatToggled.remove(player);
+            player.sendMessage(new TextComponent(
+                    Utils.cc(Message.ADMIN_CHAT_OFF.asString())
+            ));
         } else {
             adminChatToggled.add(player);
+            player.sendMessage(new TextComponent(
+                    Utils.cc(Message.ADMIN_CHAT_ON.asString())
+            ));
         }
     }
 

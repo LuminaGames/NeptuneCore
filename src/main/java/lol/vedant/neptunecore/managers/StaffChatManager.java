@@ -32,8 +32,14 @@ public class StaffChatManager {
     public static void toggleStaffChat(ProxiedPlayer player) {
         if(isEnabled(player)) {
             staffChatToggled.remove(player);
+            player.sendMessage(new TextComponent(Utils.cc(
+                    Message.STAFF_CHAT_OFF.asString()
+            )));
         } else {
             staffChatToggled.add(player);
+            player.sendMessage(new TextComponent(Utils.cc(
+                    Message.STAFF_CHAT_ON.asString()
+            )));
         }
     }
 
