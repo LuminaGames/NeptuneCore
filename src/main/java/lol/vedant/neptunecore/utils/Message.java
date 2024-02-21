@@ -18,7 +18,12 @@ public enum Message {
     ADMIN_CHAT_ON("ADMIN_CHAT.TOGGLE_ON"),
     ADMIN_CHAT_OFF("ADMIN_CHAT.TOGGLE_OFF"),
     ADMIN_CHAT_FORMAT("ADMIN_CHAT.FORMAT"),
-    ADMIN_CHAT_PREFIX("ADMIN_CHAT.PREFIX");
+    ADMIN_CHAT_PREFIX("ADMIN_CHAT.PREFIX"),
+
+    //Private messaging
+    MESSAGE_PREFIX("PRIVATE_MESSAGE.PREFIX"),
+    MESSAGE_FORMAT("PRIVATE_MESSAGE.FORMAT");
+
 
     private static net.md_5.bungee.config.Configuration config;
     private final String path;

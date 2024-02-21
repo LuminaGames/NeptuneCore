@@ -27,5 +27,6 @@ public class ConfigManager {
     public Configuration getMessages() {
         return messages.getConfig();
     }
+    
 
 }

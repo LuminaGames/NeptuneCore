@@ -14,3 +14,7 @@ ADMIN_CHAT:
   FORMAT: "{ac_prefix} {player} &7: &f{message}"
   TOGGLE_ON: "{ac_prefix} &aSwitched to admin chat channel"
   TOGGLE_OFF: "{ac_prefix} &aSwitched to global chat channel"
+
+PRIVATE_MESSAGE:
+  PREFIX: "&7[&6&lMSG&7]"
+  FORMAT: "{msg_prefix} {player} &7: &f{message}"

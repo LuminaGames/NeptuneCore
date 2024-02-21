@@ -1,0 +1,8 @@
+server:
+  motd:
+    enabled: true
+    content: "This is server motd"
+  version:
+    enabled: true
+    content:
+      - "&fYou can customize this too!"
