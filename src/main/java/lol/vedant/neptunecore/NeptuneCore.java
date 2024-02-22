@@ -1,5 +1,8 @@
 package lol.vedant.neptunecore;
 
+import lol.vedant.neptunecore.commands.other.NeptuneCoreCommand;
+import lol.vedant.neptunecore.commands.player.MessageCommand;
+import lol.vedant.neptunecore.commands.player.OnlineStaffCommand;
 import lol.vedant.neptunecore.commands.staff.AdminChatCommand;
 import lol.vedant.neptunecore.commands.staff.StaffChatCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
@@ -31,6 +34,9 @@ public final class NeptuneCore extends Plugin {
     public void registerCommands() {
         getProxy().getPluginManager().registerCommand(this, new StaffChatCommand("staffchat", "neptune.command.staffchat", "sc"));
         getProxy().getPluginManager().registerCommand(this, new AdminChatCommand("adminchat", "neptune.command.adminchat", "ac"));
+        getProxy().getPluginManager().registerCommand(this, new NeptuneCoreCommand("neptunecore", null, "neptune"));
+        getProxy().getPluginManager().registerCommand(this, new MessageCommand("message", "neptune.command.message", "msg"));
+        getProxy().getPluginManager().registerCommand(this, new OnlineStaffCommand("onlinestaff", "neptune.command.onlinestaff", "staff", "staffonline"));
     }
 
     public void registerEvents() {
@@ -39,8 +45,9 @@ public final class NeptuneCore extends Plugin {
     }
 
     public Configuration getConfig() {
-            return configManager.getConfig();
+        return configManager.getConfig();
     }
+
     public Configuration getMessage() {
         return configManager.getMessages();
     }

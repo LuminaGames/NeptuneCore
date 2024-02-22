@@ -31,4 +31,8 @@ public class MessageManager {
         return lastMessage.get(player);
     }
 
+    public static boolean hasLastMessage(ProxiedPlayer player) {
+        return lastMessage.containsKey(player);
+    }
+
 }

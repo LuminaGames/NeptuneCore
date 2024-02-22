@@ -2,6 +2,14 @@ GENERAL:
   PREFIX: "&7[&bNeptune&7]"
   NO_PERMISSION: "{prefix} &cYou don't have permission to execute this command"
   UNKNOWN_COMMAND: "{prefix} &fUnknown command!"
+  HELP_1:
+    - "&bNeptune Core &fplugin help"
+    - ""
+    - "&9Documentation: &fhttps://github.com/LuminaGames/NeptuneCore/wiki"
+  ONLINE_STAFF:
+    - "&9&lCurrently Online Staff"
+    - ""
+    - "&f{staffList}"
 
 STAFF_CHAT:
   PREFIX: "&7[&b&lSC&7]"

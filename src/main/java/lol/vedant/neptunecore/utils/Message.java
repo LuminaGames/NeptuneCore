@@ -1,12 +1,18 @@
 package lol.vedant.neptunecore.utils;
 
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.config.Configuration;
+
+import java.util.List;
 
 public enum Message {
 
     //General stuff
     PREFIX("GENERAL.PREFIX"),
     PLAYER_ONLY_COMMAND("GENERAL.PLAYER_ONLY_COMMAND"),
+    HELP_1("GENERAL.HELP_1"),
+    STAFF_ONLINE("GENERAL.ONLINE_STAFF"),
 
     //Staff chat
     STAFF_CHAT_PREFIX("STAFF_CHAT.PREFIX"),
@@ -25,7 +31,7 @@ public enum Message {
     MESSAGE_FORMAT("PRIVATE_MESSAGE.FORMAT");
 
 
-    private static net.md_5.bungee.config.Configuration config;
+    private static Configuration config;
     private final String path;
 
     Message(String path) {
@@ -34,6 +40,21 @@ public enum Message {
 
     public static void setConfiguration(Configuration c) {
         config = c;
+    }
+
+    public void send(CommandSender receiver, Object... replacements) {
+        Object value = config.get(this.path);
+
+        String message;
+        if (value == null) {
+            message = "Neptune: message not found (" + this.path + ")";
+        } else {
+            message = value instanceof List ? Utils.fromList((List<?>) value) : value.toString();
+        }
+
+        if (!message.isEmpty()) {
+            receiver.sendMessage(new TextComponent(Utils.cc(replace(message, replacements))));
+        }
     }
 
     private String replace(String message, Object... replacements) {
