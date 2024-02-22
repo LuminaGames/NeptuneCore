@@ -28,7 +28,9 @@ public enum Message {
 
     //Private messaging
     MESSAGE_PREFIX("PRIVATE_MESSAGE.PREFIX"),
-    MESSAGE_FORMAT("PRIVATE_MESSAGE.FORMAT");
+    MESSAGE_FORMAT("PRIVATE_MESSAGE.FORMAT"),
+    OFFLINE_PLAYER("PRIVATE_MESSAGE.OFFLINE_PLAYER"),
+    NO_ONE_REPLY("PRIVATE_MESSAGE.NO_ONE_REPLY");
 
 
     private static Configuration config;
@@ -66,9 +68,12 @@ public enum Message {
         String prefix = config.getString(PREFIX.getPath());
         String sc_prefix = config.getString(STAFF_CHAT_PREFIX.getPath());
         String ac_prefix = config.getString(ADMIN_CHAT_PREFIX.getPath());
+        String msg_prefix = config.getString(MESSAGE_PREFIX.getPath());
+
         return message
                 .replace("{prefix}", prefix != null && !prefix.isEmpty() ? prefix : "")
                 .replace("{sc_prefix}", sc_prefix != null && !sc_prefix.isEmpty() ? sc_prefix : "")
+                .replace("{msg_prefix}", msg_prefix != null && !msg_prefix.isEmpty() ? msg_prefix : "")
                 .replace("{ac_prefix}", ac_prefix != null && !ac_prefix.isEmpty() ? ac_prefix : "");
     }
 

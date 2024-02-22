@@ -1,7 +1,9 @@
 package lol.vedant.neptunecore.managers;
 
+import lol.vedant.neptunecore.api.events.PrivateMessageEvent;
 import lol.vedant.neptunecore.utils.Message;
 import lol.vedant.neptunecore.utils.Utils;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 
@@ -19,8 +21,16 @@ public class MessageManager {
                         .replace("{message}", message)
                 )
         ));
+        player.sendMessage(new TextComponent(
+                Utils.cc(Message.MESSAGE_FORMAT.asString()
+                        .replace("{player}", player.getName())
+                        .replace("{message}", message)
+                )
+        ));
         setLastMessage(receiver, player);
         setLastMessage(player, receiver);
+
+        ProxyServer.getInstance().getPluginManager().callEvent(new PrivateMessageEvent(player, receiver, message));
     }
 
     public static void setLastMessage(ProxiedPlayer player, ProxiedPlayer sender) {

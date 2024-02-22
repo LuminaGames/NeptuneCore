@@ -3,6 +3,7 @@ package lol.vedant.neptunecore;
 import lol.vedant.neptunecore.commands.other.NeptuneCoreCommand;
 import lol.vedant.neptunecore.commands.player.MessageCommand;
 import lol.vedant.neptunecore.commands.player.OnlineStaffCommand;
+import lol.vedant.neptunecore.commands.player.ReplyCommand;
 import lol.vedant.neptunecore.commands.staff.AdminChatCommand;
 import lol.vedant.neptunecore.commands.staff.StaffChatCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
@@ -37,6 +38,7 @@ public final class NeptuneCore extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new NeptuneCoreCommand("neptunecore", null, "neptune"));
         getProxy().getPluginManager().registerCommand(this, new MessageCommand("message", "neptune.command.message", "msg"));
         getProxy().getPluginManager().registerCommand(this, new OnlineStaffCommand("onlinestaff", "neptune.command.onlinestaff", "staff", "staffonline"));
+        getProxy().getPluginManager().registerCommand(this, new ReplyCommand("reply", "neptune.command.reply", "r"));
     }
 
     public void registerEvents() {

@@ -25,4 +25,7 @@ ADMIN_CHAT:
 
 PRIVATE_MESSAGE:
   PREFIX: "&7[&6&lMSG&7]"
-  FORMAT: "{msg_prefix} {player} &7: &f{message}"
+  FORMAT: "{msg_prefix} &e{player}&7: &f{message}"
+  NO_ONE_REPLY: "{msg_prefix} &cThere is no one to reply."
+  OFFLINE_PLAYER: "{msg_prefix} &cThe player is not online."
+
