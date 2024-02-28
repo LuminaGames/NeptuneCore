@@ -30,7 +30,12 @@ public enum Message {
     MESSAGE_PREFIX("PRIVATE_MESSAGE.PREFIX"),
     MESSAGE_FORMAT("PRIVATE_MESSAGE.FORMAT"),
     OFFLINE_PLAYER("PRIVATE_MESSAGE.OFFLINE_PLAYER"),
-    NO_ONE_REPLY("PRIVATE_MESSAGE.NO_ONE_REPLY");
+    NO_ONE_REPLY("PRIVATE_MESSAGE.NO_ONE_REPLY"),
+
+    //Staff Messages
+    STAFF_PREFIX("STAFF.PREFIX"),
+    SERVER_SWITCH("STAFF.SERVER_SWITCH"),
+    SERVER_JOIN("STAFF.SERVER_JOIN");
 
 
     private static Configuration config;
@@ -69,12 +74,14 @@ public enum Message {
         String sc_prefix = config.getString(STAFF_CHAT_PREFIX.getPath());
         String ac_prefix = config.getString(ADMIN_CHAT_PREFIX.getPath());
         String msg_prefix = config.getString(MESSAGE_PREFIX.getPath());
+        String s_prefix = config.getString(STAFF_PREFIX.getPath());
 
         return message
                 .replace("{prefix}", prefix != null && !prefix.isEmpty() ? prefix : "")
                 .replace("{sc_prefix}", sc_prefix != null && !sc_prefix.isEmpty() ? sc_prefix : "")
                 .replace("{msg_prefix}", msg_prefix != null && !msg_prefix.isEmpty() ? msg_prefix : "")
-                .replace("{ac_prefix}", ac_prefix != null && !ac_prefix.isEmpty() ? ac_prefix : "");
+                .replace("{ac_prefix}", ac_prefix != null && !ac_prefix.isEmpty() ? ac_prefix : "")
+                .replace("{sc_prefix}", s_prefix != null && !s_prefix.isEmpty() ? s_prefix : "");
     }
 
     public String getPath() {

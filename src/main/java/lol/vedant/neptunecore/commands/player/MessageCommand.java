@@ -1,6 +1,7 @@
 package lol.vedant.neptunecore.commands.player;
 
 import lol.vedant.neptunecore.managers.MessageManager;
+import lol.vedant.neptunecore.utils.Utils;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -32,6 +33,11 @@ public class MessageCommand extends Command {
 
         if (target == null || !target.isConnected()) {
             player.sendMessage(new TextComponent("Player " + playerName + " is not online."));
+            return;
+        }
+
+        if(target == player) {
+            player.sendMessage(new TextComponent(Utils.cc("&cYou cannot message yourself")));
             return;
         }
 

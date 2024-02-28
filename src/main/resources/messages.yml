@@ -15,13 +15,13 @@ STAFF_CHAT:
   PREFIX: "&7[&b&lSC&7]"
   FORMAT: "{sc_prefix} {player} &7: &f{message}"
   TOGGLE_ON: "{sc_prefix} &aSwitched to staff chat channel"
-  TOGGLE_OFF: "{sc_prefix} &aSwitched to global chat channel"
+  TOGGLE_OFF: "{sc_prefix} &aSwitched off staff chat"
 
 ADMIN_CHAT:
   PREFIX: "&7[&c&lAC&7]"
   FORMAT: "{ac_prefix} {player} &7: &f{message}"
   TOGGLE_ON: "{ac_prefix} &aSwitched to admin chat channel"
-  TOGGLE_OFF: "{ac_prefix} &aSwitched to global chat channel"
+  TOGGLE_OFF: "{ac_prefix} &aSwitched off admin chat"
 
 PRIVATE_MESSAGE:
   PREFIX: "&7[&6&lMSG&7]"
@@ -29,3 +29,7 @@ PRIVATE_MESSAGE:
   NO_ONE_REPLY: "{msg_prefix} &cThere is no one to reply."
   OFFLINE_PLAYER: "{msg_prefix} &cThe player is not online."
 
+STAFF:
+  PREFIX: "&7[&b&lS&7]"
+  SERVER_SWITCH: "{s_prefix} &b{player} &fhas joined &b{targetServer} &ffrom &b{currentServer}"
+  SERVER_JOIN: "{s_prefix} &b{player} &fhas joined &b{serverName}"

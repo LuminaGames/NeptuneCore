@@ -1,3 +1,6 @@
+#######################################
+##         Server Settings           ##
+#######################################
 server:
   motd:
     enabled: true
@@ -6,3 +9,31 @@ server:
     enabled: true
     content:
       - "&fYou can customize this too!"
+  # Use name: display to set the name. You can use color codes but not recommended
+  display-names:
+    lobby1: "Lobby-1"
+
+
+#######################################
+##         Fallback Servers          ##
+#######################################
+
+# These servers will also be used for /hub command
+lobby-servers:
+  - lobby1
+  - lobby2
+# If a server goes offline or crashes it will send players to the lobby servers
+fallback: true
+# If the kick message contains the following words it will not send the player to
+# the fallback servers
+ignored-reasons:
+  - "ban"
+  - "kick"
+  - "blacklist"
+  - "maintenance"
+
+ignored-servers:
+  - bedwars
+  - skywars
+  - lifesteal
+
