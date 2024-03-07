@@ -1,6 +1,8 @@
 package lol.vedant.neptunecore.listeners;
 
 import lol.vedant.neptunecore.NeptuneCore;
+import net.md_5.bungee.api.Callback;
+import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -32,12 +34,22 @@ public class ServerKickListener implements Listener {
         boolean isEmpty = e.getKickReasonComponent() == null;
         String reason = isEmpty ? "" : BaseComponent.toLegacyText(e.getKickReasonComponent());
         List<String> ignoredReasons = plugin.getConfig().getStringList("ignored-reasons");
+        List<String> ignoredServers = plugin.getConfig().getStringList("ignored-servers");
 
         for (String iReason : ignoredReasons) {
             if (reason.contains(iReason)) {
                 return;
             }
         }
+
+        for (String iServer : ignoredServers) {
+            if(kicked.getName().equalsIgnoreCase(iServer)) {
+                return;
+            }
+        }
+
+
+        
 
 
 

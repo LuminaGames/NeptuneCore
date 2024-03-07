@@ -2,7 +2,6 @@ package lol.vedant.neptunecore.commands.other;
 
 import lol.vedant.neptunecore.utils.Message;
 import net.md_5.bungee.api.CommandSender;
-import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.plugin.Command;
 
 public class NeptuneCoreCommand extends Command {

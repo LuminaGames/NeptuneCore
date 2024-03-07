@@ -24,6 +24,10 @@ public class ServerPingListener implements Listener {
         if (plugin.getConfig().getBoolean("server.motd.enabled")) {
             ping.setDescriptionComponent(new TextComponent(motd));
         }
+
+        if (plugin.getConfig().getBoolean("server.player-hover.enabled")) {
+            //To be done :)
+        }
         e.setResponse(ping);
     }
 }

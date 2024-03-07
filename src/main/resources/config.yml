@@ -4,11 +4,11 @@
 server:
   motd:
     enabled: true
-    content: "This is server motd"
-  version:
+    content: "&7Server is running &b&lNeptune Core &7by &fLumina Games"
+  player-hover:
     enabled: true
     content:
-      - "&fYou can customize this too!"
+      - "&bNeptune Core :)"
   # Use name: display to set the name. You can use color codes but not recommended
   display-names:
     lobby1: "Lobby-1"
@@ -20,10 +20,12 @@ server:
 
 # These servers will also be used for /hub command
 lobby-servers:
-  - lobby1
-  - lobby2
+  - lobby
 # If a server goes offline or crashes it will send players to the lobby servers
 fallback: true
+# The plugin will still connect the player to the fallback server if it is full
+# You can give VIP or Staff neptune.fallback.bypass permission to bypass this if wanted
+respect-limit: false
 # If the kick message contains the following words it will not send the player to
 # the fallback servers
 ignored-reasons:
@@ -31,7 +33,6 @@ ignored-reasons:
   - "kick"
   - "blacklist"
   - "maintenance"
-
 ignored-servers:
   - bedwars
   - skywars

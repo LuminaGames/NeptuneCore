@@ -6,7 +6,7 @@
 
     <groupId>lol.vedant</groupId>
     <artifactId>NeptuneCore</artifactId>
-    <version>1.0.0</version>
+    <version>ALPHA-1.0.1</version>
     <packaging>jar</packaging>
 
     <name>NeptuneCore</name>
@@ -67,7 +67,7 @@
         <dependency>
             <groupId>io.github.vedantmulay</groupId>
             <artifactId>NeptuneAPI</artifactId>
-            <version>1.0.6</version>
+            <version>1.0.7</version>
         </dependency>
     </dependencies>
 </project>

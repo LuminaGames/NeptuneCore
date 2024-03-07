@@ -13,11 +13,13 @@ public class ConfigManager {
     private Plugin plugin;
     private NeptuneBungeeConfig config;
     private NeptuneBungeeConfig messages;
+    private NeptuneBungeeConfig servers;
 
     public ConfigManager(Plugin plugin) {
         this.plugin = plugin;
         config = new NeptuneBungeeConfig("config", plugin);
         messages = new NeptuneBungeeConfig("messages", plugin);
+        servers = new NeptuneBungeeConfig("servers", plugin);
     }
 
     public Configuration getConfig() {
@@ -26,6 +28,10 @@ public class ConfigManager {
 
     public Configuration getMessages() {
         return messages.getConfig();
+    }
+
+    public Configuration getServers() {
+        return servers.getConfig();
     }
     
 

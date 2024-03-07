@@ -31,7 +31,7 @@ public final class NeptuneCore extends Plugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
+        getLogger().info("Closing Neptune Core");
     }
 
     public void registerCommands() {
@@ -56,5 +56,9 @@ public final class NeptuneCore extends Plugin {
 
     public Configuration getMessage() {
         return configManager.getMessages();
+    }
+
+    public Configuration getServers() {
+        return configManager.getServers();
     }
 }
