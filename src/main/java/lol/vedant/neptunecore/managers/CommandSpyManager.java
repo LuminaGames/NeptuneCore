@@ -17,6 +17,10 @@ public class CommandSpyManager {
         }
     }
 
+    public static List<ProxiedPlayer> getToggledPlayers() {
+        return commandSpyToggled;
+    }
+
     public static boolean isEnabled(ProxiedPlayer player) {
         return commandSpyToggled.contains(player);
     }

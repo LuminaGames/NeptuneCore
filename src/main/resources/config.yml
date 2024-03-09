@@ -38,3 +38,13 @@ ignored-servers:
   - skywars
   - lifesteal
 
+
+#######################################
+##         Server Maintenance        ##
+#######################################
+
+maintenance:
+  enabled: false
+  kick-message:
+    - '&cThe server is currently under maintenance'
+    - '&fPlease join back later'

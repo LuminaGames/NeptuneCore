@@ -1,10 +1,8 @@
 package lol.vedant.neptunecore.config;
 
 import io.github.vedantmulay.neptuneapi.bungee.config.NeptuneBungeeConfig;
-import lol.vedant.neptunecore.NeptuneCore;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
-import net.md_5.bungee.config.ConfigurationProvider;
 
 
 

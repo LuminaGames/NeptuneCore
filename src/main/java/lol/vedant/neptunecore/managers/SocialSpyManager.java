@@ -17,6 +17,10 @@ public class SocialSpyManager {
         }
     }
 
+    public static List<ProxiedPlayer> getToggledPlayers() {
+        return socialSpyToggled;
+    }
+
     public static boolean isEnabled(ProxiedPlayer player) {
         return socialSpyToggled.contains(player);
     }
