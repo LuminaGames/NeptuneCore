@@ -36,8 +36,8 @@ public enum Message {
     STAFF_PREFIX("STAFF.PREFIX"),
     SERVER_SWITCH("STAFF.SERVER_SWITCH"),
     SERVER_JOIN("STAFF.SERVER_JOIN"),
-    SOCIAL_SPY("STAFF.SOCIAL_SPY");
-
+    SOCIAL_SPY("SOCIAL_SPY.FORMAT"),
+    COMMAND_SPY("COMMAND_SPY.FORMAT");
 
 
     private static Configuration config;

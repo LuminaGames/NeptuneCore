@@ -33,4 +33,13 @@ STAFF:
   PREFIX: "&7[&b&lS&7]"
   SERVER_SWITCH: "{s_prefix} &b{player} &fhas joined &b{targetServer} &ffrom &b{currentServer}"
   SERVER_JOIN: "{s_prefix} &b{player} &fhas joined &b{serverName}"
-  SOCIAL_SPY: "{s_prefix} &b{sender} &7➜ &b{receiver}: &f{message}"
+
+SOCIAL_SPY:
+  FORMAT: "{s_prefix} &b{sender} &7➜ &b{receiver}: &f{message}"
+  ENABLE: "{s_prefix} &aSocial spy enabled!"
+  DISABLE: "{s_prefix} &cSocial spy disabled"
+
+COMMAND_SPY:
+  FORMAT: "{s_prefix} &b{sender}: &f{command}"
+  ENABLE: "{s_prefix} &aCommand spy enabled!"
+  DISABLE: "{s_prefix} &cCommand spy disabled"
