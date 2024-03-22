@@ -1,8 +1,6 @@
 package lol.vedant.neptunecore.listeners;
 
 import lol.vedant.neptunecore.NeptuneCore;
-import net.md_5.bungee.api.Callback;
-import net.md_5.bungee.api.ServerPing;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.config.ServerInfo;
 import net.md_5.bungee.api.connection.ProxiedPlayer;

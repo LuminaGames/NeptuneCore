@@ -31,6 +31,12 @@ public class ConfigManager {
     public Configuration getServers() {
         return servers.getConfig();
     }
+
+    public void save() {
+        config.save();
+        messages.save();
+        servers.save();
+    }
     
 
 }

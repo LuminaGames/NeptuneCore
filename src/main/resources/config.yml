@@ -9,9 +9,7 @@ server:
     enabled: true
     content:
       - "&bNeptune Core :)"
-  # Use name: display to set the name. You can use color codes but not recommended
-  display-names:
-    lobby1: "Lobby-1"
+      - "You can customize this too!"
 
 
 #######################################

@@ -5,10 +5,7 @@ import lol.vedant.neptunecore.commands.player.LobbyCommand;
 import lol.vedant.neptunecore.commands.player.MessageCommand;
 import lol.vedant.neptunecore.commands.player.OnlineStaffCommand;
 import lol.vedant.neptunecore.commands.player.ReplyCommand;
-import lol.vedant.neptunecore.commands.staff.AdminChatCommand;
-import lol.vedant.neptunecore.commands.staff.CommandSpyCommand;
-import lol.vedant.neptunecore.commands.staff.SocialSpyCommand;
-import lol.vedant.neptunecore.commands.staff.StaffChatCommand;
+import lol.vedant.neptunecore.commands.staff.*;
 import lol.vedant.neptunecore.config.ConfigManager;
 import lol.vedant.neptunecore.listeners.*;
 import lol.vedant.neptunecore.utils.Message;
@@ -44,6 +41,7 @@ public final class NeptuneCore extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new LobbyCommand("lobby", "neptune.command.lobby", this, "hub"));
         getProxy().getPluginManager().registerCommand(this, new CommandSpyCommand("commandspy", "neptune.command.commandspy", "cspy"));
         getProxy().getPluginManager().registerCommand(this, new SocialSpyCommand("socialspy", "neptune.command.socialspy", "sspy"));
+        getProxy().getPluginManager().registerCommand(this, new MaintenanceCommand("maintenance", "neptune.command.maintenance", this));
     }
 
     public void registerEvents() {
@@ -65,5 +63,9 @@ public final class NeptuneCore extends Plugin {
 
     public Configuration getServers() {
         return configManager.getServers();
+    }
+
+    public void saveConfig() {
+        configManager.save();
     }
 }

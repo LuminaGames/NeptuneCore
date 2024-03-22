@@ -83,7 +83,7 @@ public enum Message {
                 .replace("{sc_prefix}", sc_prefix != null && !sc_prefix.isEmpty() ? sc_prefix : "")
                 .replace("{msg_prefix}", msg_prefix != null && !msg_prefix.isEmpty() ? msg_prefix : "")
                 .replace("{ac_prefix}", ac_prefix != null && !ac_prefix.isEmpty() ? ac_prefix : "")
-                .replace("{sc_prefix}", s_prefix != null && !s_prefix.isEmpty() ? s_prefix : "");
+                .replace("{s_prefix}", s_prefix != null && !s_prefix.isEmpty() ? s_prefix : "");
     }
 
     public String getPath() {

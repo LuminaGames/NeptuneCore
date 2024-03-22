@@ -14,7 +14,26 @@ public class MaintenanceCommand extends Command {
     }
 
     @Override
-    public void execute(CommandSender commandSender, String[] strings) {
+    public void execute(CommandSender sender, String[] args) {
+
+        if(args.length < 1) {
+            if(plugin.getConfig().getBoolean("maintenance.enabled")) {
+                plugin.getConfig().set("maintenance.enabled", false);
+                plugin.saveConfig();
+            } else {
+                plugin.getConfig().set("maintenance.enabled", true);
+                plugin.saveConfig();
+            }
+            return;
+        }
+
+        if(args[0].equalsIgnoreCase("on")) {
+            plugin.getConfig().set("maintenance.enabled", true);
+            plugin.saveConfig();
+        } else if(args[0].equalsIgnoreCase("off")) {
+            plugin.getConfig().set("maintenance.enabled", false);
+            plugin.saveConfig();
+        }
 
     }
 }

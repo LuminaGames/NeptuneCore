@@ -6,17 +6,30 @@ import java.util.List;
 
 public interface Party {
 
-    ProxiedPlayer getLeader();
+    boolean hasParty(ProxiedPlayer player);
 
-    List<ProxiedPlayer> getMembers();
+    boolean isLeader(ProxiedPlayer player);
 
-    boolean addMember(ProxiedPlayer player, ProxiedPlayer leader);
+    List<ProxiedPlayer> getMembers(ProxiedPlayer player);
 
-    boolean removeMember(ProxiedPlayer leader);
+    void create(ProxiedPlayer leader, ProxiedPlayer... players);
 
-    boolean isMember(ProxiedPlayer leader);
+    void add(ProxiedPlayer leader, ProxiedPlayer player);
 
-    void sendMessage(ProxiedPlayer leader, String message);
+    void remove(ProxiedPlayer leader, ProxiedPlayer player);
+
+    void disband(ProxiedPlayer leader);
+
+    boolean isMember(ProxiedPlayer leader, ProxiedPlayer player);
+
+    default ProxiedPlayer getLeader(ProxiedPlayer member) {
+        for(ProxiedPlayer p : this.getMembers(member)) {
+            return p;
+        }
+        return null;
+    }
+
+
 
 
 
