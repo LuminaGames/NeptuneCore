@@ -2,7 +2,7 @@
 
 Neptune Core is a BungeeCord/Waterfall server plugin which provides many utility features for your server.
 
-## The development is halted as we are migrating to Velocity API due to PaperMC discontinuing Waterfall Project. We recommend everyone to migrate to velocity.
+## This is the old waterfall version of the plugin which was in early development stage and will no longer be maintained.
 
 **WARNING: The plugin is currently in early development stage. Please report any bugs on the [Github](https://github.com/LuminaGames/NeptuneCore/issues) or [Discord](https://discord.gg/e97HsSX89j)**
 
