@@ -34,7 +34,7 @@ public final class NeptuneCore extends Plugin {
     public void registerCommands() {
         getProxy().getPluginManager().registerCommand(this, new StaffChatCommand("staffchat", "neptune.command.staffchat", "sc"));
         getProxy().getPluginManager().registerCommand(this, new AdminChatCommand("adminchat", "neptune.command.adminchat", "ac"));
-        getProxy().getPluginManager().registerCommand(this, new NeptuneCoreCommand("neptunecore", null, "neptune"));
+        getProxy().getPluginManager().registerCommand(this, new NeptuneCoreCommand("neptunecore", null,this, "neptune"));
         getProxy().getPluginManager().registerCommand(this, new MessageCommand("message", "neptune.command.message", "msg"));
         getProxy().getPluginManager().registerCommand(this, new OnlineStaffCommand("onlinestaff", "neptune.command.onlinestaff", "staff", "staffonline"));
         getProxy().getPluginManager().registerCommand(this, new ReplyCommand("reply", "neptune.command.reply", "r"));
