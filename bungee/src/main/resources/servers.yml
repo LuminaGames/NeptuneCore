@@ -1,0 +1,8 @@
+server-groups:
+  lobby:
+    - lobby1
+    - lobby2
+    - lobby3
+  sw-lobby:
+    - sw_lobby_1
+    - sw_lobby_2
