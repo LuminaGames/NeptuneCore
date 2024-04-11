@@ -2,7 +2,6 @@
 
 <p align=center>Neptune Core is a BungeeCord/Waterfall server plugin which provides many utility features for your server.</p>
 
-**WARNING: The plugin is currently in early development stage. Please report any bugs on the [Github](https://github.com/LuminaGames/NeptuneCore/issues) or [Discord](https://discord.gg/e97HsSX89j)**
 
 ## [Documentation](https://docs.vedant.lol/neptunecore)
 
@@ -14,9 +13,10 @@
 * Utility Commands (/lobby etc.)
 * Social Spy
 * Command Spy
-
+* Maintenance System
+* 
 ## Upcoming Features
 * Player Balancer
-* Maintenance System
+
   
 and many more coming soon...
