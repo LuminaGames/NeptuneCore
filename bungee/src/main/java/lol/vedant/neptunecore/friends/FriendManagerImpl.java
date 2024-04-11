@@ -24,23 +24,50 @@ public class FriendManagerImpl implements FriendManager {
         plugin.getDatabase().addFriend(player, friend);
         ProxiedPlayer player_ = ProxyServer.getInstance().getPlayer(player);
         if(player_ != null) {
-
+            Message.FRIEND_REQUEST_SENT.send(player_, "{player}", friend);
+        }
+        ProxiedPlayer friend_ = ProxyServer.getInstance().getPlayer(friend);
+        if(friend_.isConnected()) {
+           Message.FRIEND_REQUEST.send(friend_, "{player}", player);
         }
     }
 
     @Override
     public void removeFriend(String player, String friend) {
-
+        plugin.getDatabase().removeFriend(player, friend);
+        ProxiedPlayer player_ = ProxyServer.getInstance().getPlayer(player);
+        if(player_ != null) {
+            //Friend Remove message
+        }
     }
+
 
     @Override
     public void sendFriendRequest(String player, String friend) {
+        plugin.getDatabase().sendFriendRequest(player, friend);
+        ProxiedPlayer player_ = ProxyServer.getInstance().getPlayer(player);
+        if(player_ != null) {
+            Message.FRIEND_REQUEST_SENT.send(player_, "{player}", friend);
+        }
+
+        ProxiedPlayer friend_ = ProxyServer.getInstance().getPlayer(friend);
+        if(friend_.isConnected()) {
+            Message.FRIEND_REQUEST.send(friend_, "{player}", player);
+        }
 
     }
 
     @Override
-    public void sendFriendMessage(String player, String friend) {
+    public void sendFriendMessage(String player, String friend, String message) {
+        ProxiedPlayer player_ = ProxyServer.getInstance().getPlayer(player);
+        ProxiedPlayer friend_ = ProxyServer.getInstance().getPlayer(friend);
 
+        player_.sendMessage(new TextComponent(Message.MESSAGE_FORMAT.asString()
+                .replace("{player}", player_.getName())
+                .replace("{message}", message)));
+        friend_.sendMessage(new TextComponent(Message.MESSAGE_FORMAT.asString()
+                .replace("{player}", player_.getName())
+                .replace("{message}", message)));
     }
 
     @Override

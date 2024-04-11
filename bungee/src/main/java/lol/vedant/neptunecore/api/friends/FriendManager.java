@@ -12,7 +12,7 @@ public interface FriendManager {
 
     void sendFriendRequest(String player, String friend);
 
-    void sendFriendMessage(String player, String friend);
+    void sendFriendMessage(String player, String friend, String message);
 
     List<Friend> getPendingRequests(String player);
 
