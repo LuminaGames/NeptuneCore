@@ -12,6 +12,7 @@ import lol.vedant.neptunecore.database.MySQL;
 import lol.vedant.neptunecore.database.SQLite;
 import lol.vedant.neptunecore.friends.FriendManagerImpl;
 import lol.vedant.neptunecore.listeners.*;
+import lol.vedant.neptunecore.metrics.Metrics;
 import lol.vedant.neptunecore.utils.Message;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
@@ -37,6 +38,10 @@ public final class NeptuneCore extends Plugin {
             database = new MySQL(this);
         } else {
             database = new SQLite();
+        }
+
+        if(getConfig().getBoolean("metrics.enable-bstats")) {
+            Metrics metrics = new Metrics(this, 21393);
         }
     }
 

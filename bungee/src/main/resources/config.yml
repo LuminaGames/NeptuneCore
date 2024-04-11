@@ -1,5 +1,6 @@
 #######################################
 ##         Database Settings         ##
+##    NO NOT ENABLE [BETA FEATURE]   ##
 #######################################
 database:
   enabled: false
@@ -63,3 +64,10 @@ maintenance:
   kick-message:
     - '&cThe server is currently under maintenance'
     - '&fPlease join back later'
+
+#######################################
+##         bStats Metrics            ##
+#######################################
+
+metrics:
+  enable-bstats: true
