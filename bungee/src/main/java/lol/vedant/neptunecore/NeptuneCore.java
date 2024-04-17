@@ -1,5 +1,6 @@
 package lol.vedant.neptunecore;
 
+import lol.vedant.neptunecore.api.friends.FriendManager;
 import lol.vedant.neptunecore.commands.other.NeptuneCoreCommand;
 import lol.vedant.neptunecore.commands.player.LobbyCommand;
 import lol.vedant.neptunecore.commands.player.MessageCommand;
@@ -37,7 +38,7 @@ public final class NeptuneCore extends Plugin {
         if(getConfig().getBoolean("database.enabled")) {
             database = new MySQL(this);
         } else {
-            database = new SQLite();
+            database = new SQLite(this);
         }
 
         if(getConfig().getBoolean("metrics.enable-bstats")) {
@@ -90,5 +91,9 @@ public final class NeptuneCore extends Plugin {
 
     public Database getDatabase() {
         return this.database;
+    }
+
+    public FriendManager getFriendManager() {
+        return friendManager;
     }
 }

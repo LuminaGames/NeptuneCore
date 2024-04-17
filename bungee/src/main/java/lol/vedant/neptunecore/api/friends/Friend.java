@@ -1,11 +1,23 @@
 package lol.vedant.neptunecore.api.friends;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-public interface Friend {
+import java.sql.Timestamp;
 
-    String getName();
+public class Friend {
 
-    ProxiedPlayer getPlayer();
+    private final String name;
+    private final Timestamp friendSince;
 
+    public Friend(String name, Timestamp friendSince) {
+        this.name = name;
+        this.friendSince = friendSince;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Timestamp getFriendSince() {
+        return friendSince;
+    }
 }

@@ -72,7 +72,7 @@ public class FriendManagerImpl implements FriendManager {
 
     @Override
     public List<Friend> getPendingRequests(String player) {
-        return null;
+        return plugin.getDatabase().getPendingRequests(player);
     }
 
     @Override

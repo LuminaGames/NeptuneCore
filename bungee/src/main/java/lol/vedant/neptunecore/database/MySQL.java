@@ -3,18 +3,18 @@ package lol.vedant.neptunecore.database;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import lol.vedant.neptunecore.NeptuneCore;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import lol.vedant.neptunecore.api.friends.Friend;
 import net.md_5.bungee.config.Configuration;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 
 public class MySQL implements Database {
 
+    private NeptuneCore plugin;
     private HikariDataSource dataSource;
     private final String host;
     private final String database;
@@ -28,6 +28,10 @@ public class MySQL implements Database {
     private Configuration config;
 
     public MySQL(NeptuneCore plugin) {
+
+        plugin.getLogger().info("Using storage method [MYSQL]");
+
+        this.plugin = plugin;
         this.config = plugin.getConfig();
         this.host = config.getString("database.host");
         this.database = config.getString("database.database");
@@ -44,7 +48,7 @@ public class MySQL implements Database {
     public void connect() {
         HikariConfig hikariConfig = new HikariConfig();
 
-        hikariConfig.setPoolName("UltimateBounty-Pool");
+        hikariConfig.setPoolName("NeptuneCore-Pool");
 
         hikariConfig.setMaximumPoolSize(poolSize);
         hikariConfig.setMaxLifetime(maxLifetime * 1000L);
@@ -77,8 +81,10 @@ public class MySQL implements Database {
 
         try {
             dataSource.getConnection();
+            plugin.getLogger().info("Connected to MySQL database successfully");
         } catch (SQLException e) {
             e.printStackTrace();
+            plugin.getLogger().severe("Could not connect to MySQL database!");
         }
     }
 
@@ -111,6 +117,7 @@ public class MySQL implements Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        plugin.getLogger().info("Created database tables..");
     }
 
 
@@ -156,6 +163,43 @@ public class MySQL implements Database {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public List<Friend> getPendingRequests(String player) {
+        String sql = "SELECT * FROM neptune_pending_requests WHERE receiver_username=?";
+        try(Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, player);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                List<Friend> requests = new ArrayList<>();
+                while(rs.next()) {
+                    requests.add(new Friend(rs.getString("sender_username"), rs.getTimestamp("date_sent")));
+                }
+                return requests;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean areFriends(String player, String friend) {
+        String sql = "SELECT * FROM neptune_friends WHERE player1_username=? AND player2_username=?";
+        try (Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, player);
+            ps.setString(2, friend);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
 }
