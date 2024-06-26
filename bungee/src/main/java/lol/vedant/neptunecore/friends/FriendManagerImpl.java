@@ -22,6 +22,8 @@ public class FriendManagerImpl implements FriendManager {
     @Override
     public void addFriend(String player, String friend) {
         plugin.getDatabase().addFriend(player, friend);
+        plugin.getDatabase().denyFriendRequest(player, friend);
+        plugin.getDatabase().denyFriendRequest(friend, player);
         ProxiedPlayer player_ = ProxyServer.getInstance().getPlayer(player);
         if(player_ != null) {
             Message.FRIEND_REQUEST_SENT.send(player_, "{player}", friend);
@@ -76,7 +78,16 @@ public class FriendManagerImpl implements FriendManager {
     }
 
     @Override
+    public void denyFriendRequest(String player, String sender) {
+        plugin.getDatabase().denyFriendRequest(player, sender);
+        ProxiedPlayer player_ = ProxyServer.getInstance().getPlayer(player);
+        if(player_ != null) {
+            Message.FRIEND_DENY.send(player_, "{player}", sender);
+        }
+    }
+
+    @Override
     public boolean areFriends(String player, String friend) {
-        return false;
+        return plugin.getDatabase().areFriends(player, friend);
     }
 }

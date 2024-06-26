@@ -10,6 +10,7 @@ GENERAL:
     - "&9&lCurrently Online Staff"
     - ""
     - "&f{staffList}"
+  NO_PLAYER_SPECIFIED: "&cNo player was specified."
 
 STAFF_CHAT:
   PREFIX: "&7[&b&lSC&7]"
@@ -53,6 +54,7 @@ FRIEND:
   REQUEST_SELF: "{f_prefix} &cYou can't friend yourself."
   REQUEST_SENT: "{f_prefix} &aRequest successfully sent to &b{player}"
   REQUEST: "{f_prefix} &fYou have received a friend request from &b{player} &fUse &b&n/friend accept {player}&f to accept,"
+  REQUEST_NOT_FOUND: "{f_prefix} &cYOu currently do not have a pending request from them."
   HELP:
     - "&b/friend add <player> &7- &fAdd a player as a friend"
     - "&b/friend remove <player> &7- &fRemove a player as a friend"
@@ -66,3 +68,5 @@ FRIEND:
     - "&b&lYour Current Friends:"
     - "{list}"
   PLAYER_OFFLINE: "{f_prefix} &cYour friend is not online"
+  NOT_FRIENDS: "{f_prefix} &cYou are not currently friends with them."
+  ALREADY_FRIENDS: "{f_prefix} &cYou are already friends with them."

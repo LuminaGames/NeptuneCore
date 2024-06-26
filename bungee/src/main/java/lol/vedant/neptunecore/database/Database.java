@@ -17,6 +17,8 @@ public interface Database {
 
     List<Friend> getPendingRequests(String player);
 
+    void denyFriendRequest(String player, String sender);
+
     boolean areFriends(String player, String friend);
 
 }

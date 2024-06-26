@@ -1,6 +1,5 @@
 package lol.vedant.neptunecore.api.friends;
 
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.List;
 
@@ -15,6 +14,9 @@ public interface FriendManager {
     void sendFriendMessage(String player, String friend, String message);
 
     List<Friend> getPendingRequests(String player);
+
+
+    void denyFriendRequest(String player, String sender);
 
     boolean areFriends(String player, String friend);
 

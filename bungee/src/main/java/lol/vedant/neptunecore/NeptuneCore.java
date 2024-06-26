@@ -1,6 +1,8 @@
 package lol.vedant.neptunecore;
 
 import lol.vedant.neptunecore.api.friends.FriendManager;
+import lol.vedant.neptunecore.commands.friends.FriendCommand;
+import lol.vedant.neptunecore.commands.friends.FriendMessageCommand;
 import lol.vedant.neptunecore.commands.other.NeptuneCoreCommand;
 import lol.vedant.neptunecore.commands.player.LobbyCommand;
 import lol.vedant.neptunecore.commands.player.MessageCommand;
@@ -62,6 +64,8 @@ public final class NeptuneCore extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new CommandSpyCommand("commandspy", "neptune.command.commandspy", "cspy"));
         getProxy().getPluginManager().registerCommand(this, new SocialSpyCommand("socialspy", "neptune.command.socialspy", "sspy"));
         getProxy().getPluginManager().registerCommand(this, new MaintenanceCommand("maintenance", "neptune.command.maintenance", this));
+        getProxy().getPluginManager().registerCommand(this, new FriendCommand("friend", "neptune.command.friend", this, "f"));
+        getProxy().getPluginManager().registerCommand(this, new FriendMessageCommand("friendmessage", "neptune.command.friend", this, "fmsg"));
     }
 
     public void registerEvents() {

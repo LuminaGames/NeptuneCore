@@ -13,6 +13,7 @@ public enum Message {
     PLAYER_ONLY_COMMAND("GENERAL.PLAYER_ONLY_COMMAND"),
     HELP_1("GENERAL.HELP_1"),
     STAFF_ONLINE("GENERAL.ONLINE_STAFF"),
+    NO_PLAYER_SPECIFIED("GENERAL.NO_PLAYER_SPECIFIED"),
 
     //Staff chat
     STAFF_CHAT_PREFIX("STAFF_CHAT.PREFIX"),
@@ -47,11 +48,14 @@ public enum Message {
     FRIEND_PENDING_REQUESTS("FRIEND.PENDING_REQUESTS"),
     FRIEND_REQUEST_SELF("FRIEND.REQUEST_SELF"),
     FRIEND_REQUEST_SENT("FRIEND.REQUEST_SENT"),
+    FRIEND_REQUEST_NOT_FOUND("FRIEND.REQUEST_NOT_FOUND"),
     FRIEND_REQUEST("FRIEND.REQUEST"),
     FRIEND_HELP("FRIEND.HELP"),
     FRIEND_MESSAGE_FORMAT("FRIEND.MESSAGE_FORMAT"),
     FRIEND_LIST_FORMAT("FRIEND.LIST_FORMAT"),
-    FRIEND_OFFLINE("FRIEND.PLAYER_OFFLINE");
+    FRIEND_OFFLINE("FRIEND.PLAYER_OFFLINE"),
+    NOT_FRIENDS("FRIEND.NOT_FRIENDS"),
+    ALREADY_FRIENDS("FRIEND.ALREADY_FRIENDS");
 
 
 
@@ -93,13 +97,15 @@ public enum Message {
         String ac_prefix = config.getString(ADMIN_CHAT_PREFIX.getPath());
         String msg_prefix = config.getString(MESSAGE_PREFIX.getPath());
         String s_prefix = config.getString(STAFF_PREFIX.getPath());
+        String f_prefix = config.getString(FRIEND_PREFIX.getPath());
 
         return message
                 .replace("{prefix}", prefix != null && !prefix.isEmpty() ? prefix : "")
                 .replace("{sc_prefix}", sc_prefix != null && !sc_prefix.isEmpty() ? sc_prefix : "")
                 .replace("{msg_prefix}", msg_prefix != null && !msg_prefix.isEmpty() ? msg_prefix : "")
                 .replace("{ac_prefix}", ac_prefix != null && !ac_prefix.isEmpty() ? ac_prefix : "")
-                .replace("{s_prefix}", s_prefix != null && !s_prefix.isEmpty() ? s_prefix : "");
+                .replace("{s_prefix}", s_prefix != null && !s_prefix.isEmpty() ? s_prefix : "")
+                .replace("{f_prefix}", f_prefix != null && !f_prefix.isEmpty() ? f_prefix : "");
     }
 
     public String getPath() {

@@ -186,6 +186,23 @@ public class MySQL implements Database {
     }
 
     @Override
+    public void denyFriendRequest(String player, String sender) {
+        String sql = "DELETE FROM neptune_pending_requests WHERE sender_username=? AND receiver_username=?";
+
+        if(!areFriends(player, sender)) {
+            return;
+        }
+
+        try (Connection connection  = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, sender);
+            ps.setString(2, player);
+        } catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public boolean areFriends(String player, String friend) {
         String sql = "SELECT * FROM neptune_friends WHERE player1_username=? AND player2_username=?";
         try (Connection connection = dataSource.getConnection()) {

@@ -31,7 +31,7 @@ public class FriendCommand extends Command {
         } else if (args[0].equalsIgnoreCase("add")) {
 
             if(args.length < 2) {
-                sender.sendMessage(new TextComponent(Utils.cc("&cPlease specify a player to add as a friend.")));
+                Message.NO_PLAYER_SPECIFIED.send(sender);
                 return;
             }
 
@@ -42,7 +42,7 @@ public class FriendCommand extends Command {
             String friend = args[1];
 
             if(manager.areFriends(friend, sender.getName())) {
-                sender.sendMessage(new TextComponent(Utils.cc("&cYou are already friends with them.")));
+                Message.ALREADY_FRIENDS.send(sender);
                 return;
             }
 
@@ -50,7 +50,7 @@ public class FriendCommand extends Command {
 
         } else if(args[0].equalsIgnoreCase("accept")) {
             if(args.length < 2) {
-                sender.sendMessage(new TextComponent(Utils.cc("&cPlease specify a player.")));
+                Message.NO_PLAYER_SPECIFIED.send(sender);
                 return;
             }
 
@@ -61,7 +61,7 @@ public class FriendCommand extends Command {
             String friend = args[1];
 
             if(manager.areFriends(friend, sender.getName())) {
-                sender.sendMessage(new TextComponent(Utils.cc("&cYou are already friends with them.")));
+                Message.ALREADY_FRIENDS.send(sender);
                 return;
             }
 
@@ -71,20 +71,20 @@ public class FriendCommand extends Command {
                 if(f.getName().equalsIgnoreCase(friend)) {
                     manager.addFriend(sender.getName(), f.getName());
                 } else {
-                    sender.sendMessage(new TextComponent(Utils.cc("&cYou don't have a pending request from them.")));
+                    Message.FRIEND_REQUEST_NOT_FOUND.send(sender);
                 }
             }
         } else if (args[0].equalsIgnoreCase("remove")) {
 
             if(args.length < 2) {
-                sender.sendMessage(new TextComponent(Utils.cc("&cPlease specify a player.")));
+                Message.NO_PLAYER_SPECIFIED.send(sender);
                 return;
             }
 
             String friend = args[1];
 
             if(!manager.areFriends(friend, sender.getName())) {
-                sender.sendMessage(new TextComponent(Utils.cc("&cYou are not friends with them.")));
+                Message.NOT_FRIENDS.send(sender);
                 return;
             }
 
@@ -98,6 +98,24 @@ public class FriendCommand extends Command {
                 sender.sendMessage(new TextComponent(Utils.cc("&b&l" + f.getName() + "&7- " + f.getFriendSince())));
             }
 
+        } else if(args[0].equalsIgnoreCase("deny")) {
+            List<Friend> pendingRequests = manager.getPendingRequests(sender.getName());
+
+            if(args.length < 2) {
+                Message.NO_PLAYER_SPECIFIED.send(sender);
+                return;
+            }
+
+            String requestSender = args[1];
+
+            for (Friend f : pendingRequests) {
+                if(f.getName().equalsIgnoreCase(requestSender)) {
+                    manager.denyFriendRequest(sender.getName(), requestSender);
+                    Message.FRIEND_DENY.send(sender, "{player}", requestSender);
+                } else {
+                    Message.FRIEND_REQUEST_NOT_FOUND.send(sender);
+                }
+            }
         }
     }
 }
