@@ -14,7 +14,7 @@
 * Social Spy
 * Command Spy
 * Maintenance System
-* 
+* Friends System
 ## Upcoming Features
 * Player Balancer
 
