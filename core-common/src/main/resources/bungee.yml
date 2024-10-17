@@ -1,0 +1,3 @@
+name: core-common
+version: '${project.version}'
+main: lol.vedant.corecommon.Core_common
