@@ -1,0 +1,71 @@
+GENERAL:
+  PREFIX: "<gray>[<aqua>Neptune<gray>]"
+  NO_PERMISSION: "{prefix} <red>You don't have permission to execute this command"
+  UNKNOWN_COMMAND: "{prefix} <white>Unknown command!"
+  HELP_1:
+    - "<aqua>Neptune Core <white>plugin help"
+    - ""
+    - "<blue>Documentation: <white>https://github.com/LuminaGames/NeptuneCore/wiki"
+  ONLINE_STAFF:
+    - "<blue><bold>Currently Online Staff"
+    - ""
+    - "<white>{staffList}"
+  NO_PLAYER_SPECIFIED: "<red>No player was specified."
+
+STAFF_CHAT:
+  PREFIX: "<gray>[<aqua><bold>SC<gray>]"
+  FORMAT: "{sc_prefix} {player} <gray>: <white>{message}"
+  TOGGLE_ON: "{sc_prefix} <green>Switched to staff chat channel"
+  TOGGLE_OFF: "{sc_prefix} <green>Switched off staff chat"
+
+ADMIN_CHAT:
+  PREFIX: "<gray>[<red><bold>AC<gray>]"
+  FORMAT: "{ac_prefix} {player} <gray>: <white>{message}"
+  TOGGLE_ON: "{ac_prefix} <green>Switched to admin chat channel"
+  TOGGLE_OFF: "{ac_prefix} <green>Switched off admin chat"
+
+PRIVATE_MESSAGE:
+  PREFIX: "<gray>[<gold><bold>MSG<gray>]"
+  FORMAT: "{msg_prefix} <yellow>{player}<gray>: <white>{message}"
+  NO_ONE_REPLY: "{msg_prefix} <red>There is no one to reply."
+  OFFLINE_PLAYER: "{msg_prefix} <red>The player is not online."
+
+STAFF:
+  PREFIX: "<gray>[<aqua><bold>S<gray>]"
+  SERVER_SWITCH: "{s_prefix} <aqua>{player} <white>has joined <aqua>{targetServer} <white>from <aqua>{currentServer}"
+  SERVER_JOIN: "{s_prefix} <aqua>{player} <white>has joined <aqua>{serverName}"
+
+SOCIAL_SPY:
+  FORMAT: "{s_prefix} <aqua>{sender} <gray>➜ <aqua>{receiver}: <white>{message}"
+  ENABLE: "{s_prefix} <green>Social spy enabled!"
+  DISABLE: "{s_prefix} <red>Social spy disabled"
+
+COMMAND_SPY:
+  FORMAT: "{s_prefix} <aqua>{sender}: <white>{command}"
+  ENABLE: "{s_prefix} <green>Command spy enabled!"
+  DISABLE: "{s_prefix} <red>Command spy disabled"
+
+FRIEND:
+  PREFIX: "<gray>[<aqua>F<gray>]"
+  FRIEND_DONE: "{f_prefix} <gray>You are now friends with <aqua>{player}<gray>!"
+  FRIEND_ACCEPT: "{f_prefix} <white>You have accepted <aqua>{player}'s<white> friend request"
+  FRIEND_DENY: "{f_prefix} <white>You have denied <aqua>{player}'s friend request"
+  PENDING_REQUESTS: "{f_prefix} <white>You currently have <aqua>{num} <white>pending friend requests"
+  REQUEST_SELF: "{f_prefix} <red>You can't friend yourself."
+  REQUEST_SENT: "{f_prefix} <green>Request successfully sent to <aqua>{player}"
+  REQUEST: "{f_prefix} <white>You have received a friend request from <aqua>{player} <white>Use <aqua><underlined>/friend accept {player}<white> to accept,"
+  REQUEST_NOT_FOUND: "{f_prefix} <red>You currently do not have a pending request from them."
+  HELP:
+    - "<aqua>/friend add <player> <gray>- <white>Add a player as a friend"
+    - "<aqua>/friend remove <player> <gray>- <white>Remove a player as a friend"
+    - "<aqua>/friend list <gray>- <white>List all of your friends"
+    - "<aqua>/friend requests <gray>- <white>List all of pending requests"
+    - "<aqua>/friend accept <player> <gray>- <white>Accept a player's pending friend request"
+    - "<aqua>/friend deny <player> <gray>- <white>Deny a player's pending friend request"
+    - "<aqua>/fmsg <player> <message> <gray>- <white>Send a message to a friend"
+  MESSAGE_FORMAT: "{f_prefix} <gold>{player}<gray>: <white>{message}"
+  LIST_MESSAGE: "{f_prefix} <aqua>Your Current Friends:"
+  PLAYER_OFFLINE: "{f_prefix} <red>Your friend is not online"
+  NOT_FRIENDS: "{f_prefix} <red>You are not currently friends with them."
+  NO_FRIENDS: "{f_prefix} <red>You don't have any friends :("
+  ALREADY_FRIENDS: "{f_prefix} <red>You are already friends with them."

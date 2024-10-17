@@ -1,0 +1,71 @@
+GENERAL:
+  PREFIX: "&7[&bNeptune&7]"
+  NO_PERMISSION: "{prefix} &cYou don't have permission to execute this command"
+  UNKNOWN_COMMAND: "{prefix} &fUnknown command!"
+  HELP_1:
+    - "&bNeptune Core &fplugin help"
+    - ""
+    - "&9Documentation: &fhttps://github.com/LuminaGames/NeptuneCore/wiki"
+  ONLINE_STAFF:
+    - "&9&lCurrently Online Staff"
+    - ""
+    - "&f{staffList}"
+  NO_PLAYER_SPECIFIED: "&cNo player was specified."
+
+STAFF_CHAT:
+  PREFIX: "&7[&b&lSC&7]"
+  FORMAT: "{sc_prefix} {player} &7: &f{message}"
+  TOGGLE_ON: "{sc_prefix} &aSwitched to staff chat channel"
+  TOGGLE_OFF: "{sc_prefix} &aSwitched off staff chat"
+
+ADMIN_CHAT:
+  PREFIX: "&7[&c&lAC&7]"
+  FORMAT: "{ac_prefix} {player} &7: &f{message}"
+  TOGGLE_ON: "{ac_prefix} &aSwitched to admin chat channel"
+  TOGGLE_OFF: "{ac_prefix} &aSwitched off admin chat"
+
+PRIVATE_MESSAGE:
+  PREFIX: "&7[&6&lMSG&7]"
+  FORMAT: "{msg_prefix} &e{player}&7: &f{message}"
+  NO_ONE_REPLY: "{msg_prefix} &cThere is no one to reply."
+  OFFLINE_PLAYER: "{msg_prefix} &cThe player is not online."
+
+STAFF:
+  PREFIX: "&7[&b&lS&7]"
+  SERVER_SWITCH: "{s_prefix} &b{player} &fhas joined &b{targetServer} &ffrom &b{currentServer}"
+  SERVER_JOIN: "{s_prefix} &b{player} &fhas joined &b{serverName}"
+
+SOCIAL_SPY:
+  FORMAT: "{s_prefix} &b{sender} &7➜ &b{receiver}: &f{message}"
+  ENABLE: "{s_prefix} &aSocial spy enabled!"
+  DISABLE: "{s_prefix} &cSocial spy disabled"
+
+COMMAND_SPY:
+  FORMAT: "{s_prefix} &b{sender}: &f{command}"
+  ENABLE: "{s_prefix} &aCommand spy enabled!"
+  DISABLE: "{s_prefix} &cCommand spy disabled"
+
+FRIEND:
+  PREFIX: "&7[&bF&7]"
+  FRIEND_DONE: "{f_prefix} &7You are now friends with &b{player}&7!"
+  FRIEND_ACCEPT: "{f_prefix} &fYou have accepted &b{player}'s&f friend request"
+  FRIEND_DENY: "{f_prefix} &fYou have denied &b{player}'s friend request"
+  PENDING_REQUESTS: "{f_prefix} &fYou currently have &b{num} &fpending friend requests"
+  REQUEST_SELF: "{f_prefix} &cYou can't friend yourself."
+  REQUEST_SENT: "{f_prefix} &aRequest successfully sent to &b{player}"
+  REQUEST: "{f_prefix} &fYou have received a friend request from &b{player} &fUse &b&n/friend accept {player}&f to accept,"
+  REQUEST_NOT_FOUND: "{f_prefix} &cYou currently do not have a pending request from them."
+  HELP:
+    - "&b/friend add <player> &7- &fAdd a player as a friend"
+    - "&b/friend remove <player> &7- &fRemove a player as a friend"
+    - "&b/friend list &7- &fList all of your friends"
+    - "&b/friend requests &7- &fList all of pending requests"
+    - "&b/friend accept <player> &7- &fAccept a player's pending friend request"
+    - "&b/friend deny <player> &7- &fDeny a player's pending friend request"
+    - "&b/fmsg <player> <message> &7- &fSend a message to a friend"
+  MESSAGE_FORMAT: "{f_prefix} &6{player}&7: &f{message}"
+  LIST_MESSAGE: "{f_prefix} &bYour Current Friends:"
+  PLAYER_OFFLINE: "{f_prefix} &cYour friend is not online"
+  NOT_FRIENDS: "{f_prefix} &cYou are not currently friends with them."
+  NO_FRIENDS: "{f_prefix} &cYou don't have any friends :("
+  ALREADY_FRIENDS: "{f_prefix} &cYou are already friends with them."
