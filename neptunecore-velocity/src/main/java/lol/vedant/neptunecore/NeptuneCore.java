@@ -1,11 +1,16 @@
 package lol.vedant.neptunecore;
 
 import com.google.inject.Inject;
+import com.velocitypowered.api.command.BrigadierCommand;
+import com.velocitypowered.api.command.CommandManager;
+import com.velocitypowered.api.command.CommandMeta;
+import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+import lol.vedant.neptunecore.commands.player.MessageCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
 import lol.vedant.neptunecore.listeners.ProxyJoinListener;
 import lol.vedant.neptunecore.listeners.ProxyPingListener;
@@ -26,7 +31,7 @@ public class NeptuneCore {
 
 
     private final Logger logger;
-    private final ProxyServer server;
+    public static ProxyServer server;
 
     private ConfigManager configManager;
 
@@ -34,7 +39,7 @@ public class NeptuneCore {
 
     @Inject
     public NeptuneCore(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
-        this.server = server;
+        NeptuneCore.server = server;
         this.logger = logger;
         this.dataFolder = dataDirectory;
 
@@ -51,6 +56,15 @@ public class NeptuneCore {
         server.getEventManager().register(this, new ProxyJoinListener(this));
         server.getEventManager().register(this, new ProxyPingListener(this));
         server.getEventManager().register(this, new ServerSwitchListener(this));
+
+        CommandManager commandManager = server.getCommandManager();
+        CommandMeta commandMeta = commandManager.metaBuilder("message")
+                .aliases("msg")
+                .plugin(this)
+                .build();
+
+        SimpleCommand messageCommand = new MessageCommand();
+        commandManager.register(commandMeta, messageCommand);
     }
 
     public ConfigurationNode getConfig() {
