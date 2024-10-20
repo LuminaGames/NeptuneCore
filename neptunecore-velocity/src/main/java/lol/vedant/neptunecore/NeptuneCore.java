@@ -11,6 +11,7 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lol.vedant.neptunecore.commands.player.MessageCommand;
+import lol.vedant.neptunecore.commands.player.ReplyCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
 import lol.vedant.neptunecore.listeners.ProxyJoinListener;
 import lol.vedant.neptunecore.listeners.ProxyPingListener;
@@ -63,8 +64,15 @@ public class NeptuneCore {
                 .plugin(this)
                 .build();
 
-        SimpleCommand messageCommand = new MessageCommand();
-        commandManager.register(commandMeta, messageCommand);
+        commandManager.register(commandMeta, new MessageCommand());
+
+        CommandMeta replyCommandMeta = commandManager.metaBuilder("reply")
+                .aliases("r")
+                .plugin(this)
+                .build();
+
+        commandManager.register(replyCommandMeta, new ReplyCommand());
+
     }
 
     public ConfigurationNode getConfig() {

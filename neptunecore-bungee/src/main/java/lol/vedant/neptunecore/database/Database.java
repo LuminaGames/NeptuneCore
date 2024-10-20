@@ -1,7 +1,6 @@
 package lol.vedant.neptunecore.database;
 
 import lol.vedant.neptunecore.api.friends.Friend;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
 
 import java.util.List;
 

@@ -46,14 +46,6 @@ public class ServerKickListener implements Listener {
             }
         }
 
-
-        
-
-
-
-
-
-
     }
 
 }

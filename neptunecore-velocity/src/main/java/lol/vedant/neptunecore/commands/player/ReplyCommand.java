@@ -11,8 +11,6 @@ import static lol.vedant.neptunecore.NeptuneCore.server;
 
 public class ReplyCommand implements SimpleCommand {
 
-
-
     @Override
     public void execute(Invocation invocation) {
         if(!(invocation.source() instanceof Player)) {
