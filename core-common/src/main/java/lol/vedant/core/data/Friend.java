@@ -9,9 +9,8 @@ public class Friend {
     UUID uuid;
     Instant friendSince;
 
-    public Friend(String username, UUID uuid, Instant friendSince) {
+    public Friend(String username, Instant friendSince) {
         this.username = username;
-        this.uuid = uuid;
         this.friendSince = friendSince;
     }
 

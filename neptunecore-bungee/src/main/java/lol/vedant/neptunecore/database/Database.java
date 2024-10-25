@@ -8,6 +8,7 @@ public interface Database {
 
     void init();
 
+
     void addFriend(String adder, String friend);
 
     void removeFriend(String player, String removedFriend);

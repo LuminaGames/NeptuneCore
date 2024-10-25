@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+@SuppressWarnings("ALL")
 public class MySQL implements Database {
 
     private HikariDataSource dataSource;
@@ -115,6 +116,43 @@ public class MySQL implements Database {
     }
 
     @Override
+    public void insert(String name, UUID uuid) {
+        String sql = "INSERT INTO neptune_user_settings (uuid, username) VALUES (?, ?)";
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, name);
+            ps.setString(2, uuid.toString());
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public boolean exists(UUID player) {
+        String sql = "SELECT * FROM neptune_user_settings WHERE uuid = ?";
+
+        try (Connection connection = dataSource.getConnection()) {
+
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, player.toString());
+            ResultSet rs = ps.executeQuery();
+
+            if(rs.next()) {
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
     public UserSettings getUserSettings(UUID player) {
         String sql = "SELECT * FROM neptune_user_settings WHERE uuid = ?";
         try (Connection connection = dataSource.getConnection()) {
@@ -157,7 +195,7 @@ public class MySQL implements Database {
     }
 
     @Override
-    public List<Friend> getFriends(UUID player) {
+    public List<Friend> getFriends(String player) {
         return List.of();
     }
 

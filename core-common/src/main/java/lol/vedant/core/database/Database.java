@@ -10,11 +10,15 @@ public interface Database {
 
     void init();
 
+    void insert(String name, UUID uuid);
+
+    boolean exists(UUID player);
+
     UserSettings getUserSettings(UUID player);
 
     void saveUserSettings(UserSettings settings, UUID player);
 
-    List<Friend> getFriends(UUID player);
+    List<Friend> getFriends(String player);
 
     void saveFriends(List<Friend> friends);
 

@@ -53,3 +53,15 @@ maintenance:
 
 metrics:
   enable-bstats: true
+
+database:
+  enabled: false
+  host: localhost
+  database: db
+  user: user
+  pass: pass
+  port: 3306
+  ssl: true
+  verify-certificate: true
+  pool-size: 10
+  max-lifetime: 1800
