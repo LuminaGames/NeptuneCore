@@ -12,6 +12,7 @@ import lol.vedant.core.database.Database;
 import lol.vedant.core.database.MySQL;
 import lol.vedant.core.database.SQLite;
 import lol.vedant.neptunecore.commands.player.FindCommand;
+import lol.vedant.neptunecore.commands.player.LobbyCommand;
 import lol.vedant.neptunecore.commands.player.MessageCommand;
 import lol.vedant.neptunecore.commands.player.ReplyCommand;
 import lol.vedant.neptunecore.commands.staff.AdminChatCommand;
@@ -94,6 +95,7 @@ public class NeptuneCore {
         registerCommand("adminchat", new AdminChatCommand(), "ac");
         registerCommand("staffchat", new StaffChatCommand(), "sc");
         registerCommand("find", new FindCommand());
+        registerCommand("lobby", new LobbyCommand(this), "hub");
 
     }
 
