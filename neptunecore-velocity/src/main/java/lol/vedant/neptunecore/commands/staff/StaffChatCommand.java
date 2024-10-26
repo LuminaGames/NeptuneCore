@@ -27,4 +27,9 @@ public class StaffChatCommand implements SimpleCommand {
             StaffChatManager.toggleStaffChat(player);
         }
     }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("neptune.command.staffchat");
+    }
 }

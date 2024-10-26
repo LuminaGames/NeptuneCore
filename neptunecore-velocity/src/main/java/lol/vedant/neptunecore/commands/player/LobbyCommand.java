@@ -46,4 +46,9 @@ public class LobbyCommand implements SimpleCommand {
         }
 
     }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("neptune.command.lobby");
+    }
 }

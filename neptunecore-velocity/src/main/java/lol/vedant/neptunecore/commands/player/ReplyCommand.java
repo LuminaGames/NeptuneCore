@@ -32,4 +32,9 @@ public class ReplyCommand implements SimpleCommand {
             Message.NO_ONE_REPLY.send(player);
         }
     }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("neptune.command.reply");
+    }
 }

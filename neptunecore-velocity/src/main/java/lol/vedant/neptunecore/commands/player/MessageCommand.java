@@ -49,4 +49,9 @@ public class MessageCommand implements SimpleCommand {
 
         MessageManager.message(player, target, message.toString().trim());
     }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("neptune.command.message");
+    }
 }

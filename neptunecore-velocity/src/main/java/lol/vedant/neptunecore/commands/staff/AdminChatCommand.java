@@ -29,4 +29,9 @@ public class AdminChatCommand implements SimpleCommand {
         }
 
     }
+
+    @Override
+    public boolean hasPermission(Invocation invocation) {
+        return invocation.source().hasPermission("neptune.command.adminchat");
+    }
 }
