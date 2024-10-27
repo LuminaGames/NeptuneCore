@@ -4,7 +4,7 @@
 
 **WARNING: Velocity version of this plugin is currently in early development stage. Please report any bugs on the [Github](https://github.com/LuminaGames/NeptuneCore/issues) or [Discord](https://discord.gg/e97HsSX89j)**
 
-## [Documentation](https://docs.vedant.lol/neptunecore)
+## [Documentation](https://docs.vedant.lol/neptune-core)
 
 ## Features
 * Staff Chat
@@ -14,9 +14,12 @@
 * Utility Commands (/lobby etc.)
 * Social Spy
 * Command Spy
+* Maintenance System
+* Friend System
 
 ## Upcoming Features
 * Player Balancer
 * Maintenance System
+* Party System
   
 and many more coming soon...
