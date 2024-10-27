@@ -1,9 +1,14 @@
-![Neptune Core plugin all in one bungeecord core plugin needed logo](https://cdn.modrinth.com/data/cached_images/2a92d07c7e5949e844a3d18201de9b1d91032f03.png)
 
-<p align=center>Neptune Core is a BungeeCord/Waterfall server plugin which provides many utility features for your server.</p>
+<p align="center">
+  <img src="https://cdn.modrinth.com/data/cached_images/2a92d07c7e5949e844a3d18201de9b1d91032f03.png" alt="Neptune Core plugin all in one bungeecord core plugin needed logo">
+</p>
 
-![](https://img.shields.io/modrinth/v/neptunecore?style=for-the-badge) ![](https://img.shields.io/modrinth/dt/neptunecore?style=for-the-badge)
+<p align="center">Neptune Core is a BungeeCord/Waterfall server plugin which provides many utility features for your server.</p>
 
+<p align="center">
+  <img src="https://img.shields.io/modrinth/v/neptunecore?style=for-the-badge" alt="Version Badge">
+  <img src="https://img.shields.io/modrinth/dt/neptunecore?style=for-the-badge" alt="Downloads Badge">
+</p>
 
 ## [Documentation](https://docs.vedant.lol/neptune-core)
 
