@@ -19,7 +19,7 @@ public class NeptuneCoreCommand extends Command {
     @Override
     public void execute(CommandSender sender, String[] args) {
 
-        if(args[0] != null && args[0].equalsIgnoreCase("help")) {
+        if (args.length > 0 && args[0].equalsIgnoreCase("help")) {
             Message.HELP_1.send(sender);
             return;
         }

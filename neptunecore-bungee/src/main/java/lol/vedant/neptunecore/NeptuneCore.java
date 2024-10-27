@@ -4,10 +4,7 @@ import lol.vedant.neptunecore.api.friends.FriendManager;
 import lol.vedant.neptunecore.commands.friends.FriendCommand;
 import lol.vedant.neptunecore.commands.friends.FriendMessageCommand;
 import lol.vedant.neptunecore.commands.other.NeptuneCoreCommand;
-import lol.vedant.neptunecore.commands.player.LobbyCommand;
-import lol.vedant.neptunecore.commands.player.MessageCommand;
-import lol.vedant.neptunecore.commands.player.OnlineStaffCommand;
-import lol.vedant.neptunecore.commands.player.ReplyCommand;
+import lol.vedant.neptunecore.commands.player.*;
 import lol.vedant.neptunecore.commands.staff.*;
 import lol.vedant.neptunecore.config.ConfigManager;
 import lol.vedant.neptunecore.database.Database;
@@ -69,6 +66,7 @@ public final class NeptuneCore extends Plugin {
         getProxy().getPluginManager().registerCommand(this, new MaintenanceCommand("maintenance", "neptune.command.maintenance", this));
         getProxy().getPluginManager().registerCommand(this, new FriendCommand("friend", "neptune.command.friend", this, "f"));
         getProxy().getPluginManager().registerCommand(this, new FriendMessageCommand("friendmessage", "neptune.command.friend", this, "fmsg"));
+        getProxy().getPluginManager().registerCommand(this, new PingCommand("ping", "neptune.command.ping"));
     }
 
     public void registerEvents() {

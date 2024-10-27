@@ -85,8 +85,8 @@ public class SQLite implements Database {
         try {
 
             PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, name);
-            ps.setString(2, uuid.toString());
+            ps.setString(1, uuid.toString());
+            ps.setString(2, name);
             ps.executeUpdate();
 
         } catch (SQLException e) {

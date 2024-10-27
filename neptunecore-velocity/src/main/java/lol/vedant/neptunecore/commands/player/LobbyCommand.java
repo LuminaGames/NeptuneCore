@@ -2,7 +2,6 @@ package lol.vedant.neptunecore.commands.player;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
-import com.velocitypowered.api.proxy.server.ServerInfo;
 import lol.vedant.neptunecore.NeptuneCore;
 import org.spongepowered.configurate.serialize.SerializationException;
 
@@ -11,6 +10,7 @@ import java.util.Random;
 
 import static lol.vedant.neptunecore.NeptuneCore.server;
 
+@SuppressWarnings("ALL")
 public class LobbyCommand implements SimpleCommand {
 
     private NeptuneCore plugin;

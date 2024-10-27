@@ -6,13 +6,13 @@
 
     <groupId>lol.vedant</groupId>
     <artifactId>neptunecore-bungee</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <packaging>jar</packaging>
 
     <parent>
         <groupId>lol.vedant</groupId>
         <artifactId>NeptuneCore</artifactId>
-        <version>1.1.1</version>
+        <version>1.1.2</version>
     </parent>
 
     <name>neptunecore-bungee</name>
