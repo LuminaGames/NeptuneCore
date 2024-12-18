@@ -7,6 +7,7 @@ import lol.vedant.core.data.Friend;
 import lol.vedant.core.data.UserSettings;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -196,7 +197,28 @@ public class MySQL implements Database {
 
     @Override
     public List<Friend> getFriends(String player) {
-        return List.of();
+        String sql = "SELECT * FORM neptune_friends WHERE player1_username=? OR player2_username=?";
+        try(Connection connection = dataSource.getConnection()) {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, player);
+            ps.setString(2, player);
+            ResultSet rs = ps.executeQuery();
+            List<Friend> friends = new ArrayList<>();
+            if(rs.next()) {
+
+                while(rs.next()) {
+                    if(rs.getString("player1_username").equals(player)) {
+                        friends.add(new Friend(rs.getString("player2_username"), rs.getTimestamp("date_added").toInstant()));
+                    } else {
+                        friends.add(new Friend(rs.getString("player1_username"), rs.getTimestamp("date_added").toInstant()));
+                    }
+                }
+                return friends;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     @Override
