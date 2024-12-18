@@ -45,11 +45,12 @@ public class SQLite implements Database {
 
     @Override
     public void init() {
-        String friendsTableSql = "CREATE TABLE IF NOT EXISTS neptune_friends (" +
-                "id INT AUTO_INCREMENT PRIMARY KEY," +
-                "player1_username VARCHAR(255) NOT NULL," +
-                "player2_username VARCHAR(255) NOT NULL," +
-                "date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP" +
+        String friendsTableSql = "CREATE TABLE neptune_friends (" +
+                "id INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "player1_username TEXT NOT NULL," +
+                "player2_username TEXT NOT NULL," +
+                "date_added TIMESTAMP DEFAULT CURRENT_TIMESTAMP," +
+                "UNIQUE (player1_username, player2_username)" +
                 ");";
 
         String pendingRequestsTableSql = "CREATE TABLE IF NOT EXISTS neptune_pending_requests (" +
@@ -184,7 +185,29 @@ public class SQLite implements Database {
     }
 
     @Override
-    public void saveFriends(List<Friend> friends) {
+    public void saveFriends(List<Friend> friends, String player) {
+        for (Friend friend : friends) {
 
+            String player1 = player;
+            String player2 = friend.getUsername();
+
+            if (player1.compareTo(player2) > 0) {
+                String temp = player1;
+                player1 = player2;
+                player2 = temp;
+            }
+
+            String sql = "INSERT INTO neptune_friends (player1_username, player2_username) VALUES (?, ?)";
+
+            try {
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ps.setString(1, player1);
+                ps.setString(2, player2);
+                ps.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 }

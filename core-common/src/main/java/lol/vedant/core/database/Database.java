@@ -20,7 +20,7 @@ public interface Database {
 
     List<Friend> getFriends(String player);
 
-    void saveFriends(List<Friend> friends);
+    void saveFriends(List<Friend> friends, String player);
 
 
 }
