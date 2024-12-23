@@ -39,6 +39,7 @@ public class NeptuneCore {
 
     private final Logger logger;
     public static ProxyServer server;
+    public static NeptuneCore instance;
 
     private ConfigManager configManager;
 
@@ -127,5 +128,9 @@ public class NeptuneCore {
 
     public Database getDatabase() {
         return database;
+    }
+
+    public static NeptuneCore getInstance() {
+        return instance;
     }
 }
