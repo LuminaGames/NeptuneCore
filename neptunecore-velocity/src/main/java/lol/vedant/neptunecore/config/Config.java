@@ -1,61 +1,57 @@
 package lol.vedant.neptunecore.config;
 
-import lol.vedant.neptunecore.NeptuneCore;
-import org.spongepowered.configurate.ConfigurationNode;
-import org.spongepowered.configurate.ConfigurationOptions;
-import org.spongepowered.configurate.loader.ConfigurationLoader;
-import org.spongepowered.configurate.loader.ParsingException;
-import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
+import org.simpleyaml.configuration.file.YamlFile;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Objects;
 
 public class Config {
 
-    private ConfigurationLoader loader;
-    private ConfigurationNode rootNode;
-    private final String name;
+    private final YamlFile yamlFile;
 
-    public Config(Path parentDir, String name) {
-        this.name = name;
+    public Config(Path path, String fileName) {
+
+        if(!Files.exists(path)) {
+            try {
+                Files.createDirectory(path);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        Path configPath = path.resolve(fileName);
+
+        if(!Files.exists(configPath)) {
+            try (InputStream in = this.getClass().getClassLoader().getResourceAsStream(fileName)) {
+                Files.copy(Objects.requireNonNull(in), configPath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        this.yamlFile = new YamlFile(configPath.toFile());
+
+        try  {
+            this.yamlFile.load();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public YamlFile getConfig() {
+        return this.yamlFile;
+    }
+
+    public void reload() {
         try {
-            if (!Files.exists(parentDir)) {
-                Files.createDirectories(parentDir);
-            }
-
-            Path filePath = parentDir.resolve(name);
-            if (!Files.exists(filePath)) {
-                Files.copy(Objects.requireNonNull(NeptuneCore.class.getClassLoader().getResourceAsStream(name)), filePath);
-            }
-
-            this.loader = YamlConfigurationLoader.builder().path(filePath).build();
-            ConfigurationNode rootNode;
-            this.rootNode = loader.load();
+            yamlFile.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void copyDefaults() {
-        try {
-            rootNode.mergeFrom(YamlConfigurationLoader.builder().url(NeptuneCore.class.getResource(name)).build().load(ConfigurationOptions.defaults()));
-        } catch (ParsingException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void save() {
-        try {
-            loader.save(rootNode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public ConfigurationNode getConfig() {
-        return rootNode;
     }
 
 }

@@ -8,22 +8,22 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lol.vedant.core.data.DatabaseSettings;
-import lol.vedant.core.database.Database;
-import lol.vedant.core.database.MySQL;
-import lol.vedant.core.database.SQLite;
-import lol.vedant.neptunecore.commands.player.FindCommand;
-import lol.vedant.neptunecore.commands.player.LobbyCommand;
-import lol.vedant.neptunecore.commands.player.MessageCommand;
-import lol.vedant.neptunecore.commands.player.ReplyCommand;
-import lol.vedant.neptunecore.commands.staff.AdminChatCommand;
-import lol.vedant.neptunecore.commands.staff.StaffChatCommand;
+import lol.vedant.neptunecore.chat.ChatManager;
+import lol.vedant.neptunecore.commands.friend.FriendCommand;
+import lol.vedant.neptunecore.commands.staff.ChatChannelCommand;
+import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
+import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
-import lol.vedant.neptunecore.listeners.ProxyJoinListener;
-import lol.vedant.neptunecore.listeners.ProxyPingListener;
-import lol.vedant.neptunecore.listeners.ServerSwitchListener;
+import lol.vedant.neptunecore.data.Cache;
+import lol.vedant.neptunecore.database.Database;
+import lol.vedant.neptunecore.database.MySQL;
+import lol.vedant.neptunecore.database.SQLite;
+import lol.vedant.neptunecore.listener.PlayerChatListener;
+import lol.vedant.neptunecore.listener.PlayerJoinListener;
+import lol.vedant.neptunecore.listener.ServerPingListener;
 import lol.vedant.neptunecore.utils.Message;
+import org.simpleyaml.configuration.file.YamlFile;
 import org.slf4j.Logger;
-import org.spongepowered.configurate.ConfigurationNode;
 
 import java.nio.file.Path;
 
@@ -31,7 +31,7 @@ import java.nio.file.Path;
         id = "neptunecore",
         name = "NeptuneCore",
         description = "The all in one core for proxy networks with everything you need...",
-        version = "1.1.1",
+        version = "2.0.0",
         authors = "COMPHACK"
 )
 public class NeptuneCore {
@@ -41,11 +41,13 @@ public class NeptuneCore {
     public static ProxyServer server;
     public static NeptuneCore instance;
 
-    private ConfigManager configManager;
+    private final ConfigManager configManager;
+    private final ChatManager chatManager;
 
     private final Path dataFolder;
+    private final Cache cache;
 
-    private Database database;
+    private final Database database;
 
     @Inject
     public NeptuneCore(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
@@ -53,26 +55,29 @@ public class NeptuneCore {
         this.logger = logger;
         this.dataFolder = dataDirectory;
 
+
         configManager = new ConfigManager(this);
+        chatManager = new ChatManager();
 
         Message.setConfiguration(getMessage());
 
         logger.info("Starting Neptune Core (Velocity)");
+        logger.info("Developed by Lumina Games");
 
         logger.info("Initializing Database");
-        if(getConfig().node("database", "enabled").getBoolean()) {
+        if(getConfig().getBoolean("database.enabled")) {
             logger.info("Using MySQL Database");
             database = new MySQL(
                     new DatabaseSettings(
-                            getConfig().node("database", "host").getString(),
-                            getConfig().node("database", "database").getString(),
-                            getConfig().node("database", "port").getInt(),
-                            getConfig().node("database", "user").getString(),
-                            getConfig().node("database", "pass").getString(),
-                            getConfig().node("database", "ssl").getBoolean(),
-                            getConfig().node("database", "verify-certificate").getBoolean(),
-                            getConfig().node("database", "pool-size").getInt(),
-                            getConfig().node("database", "max-lifetime").getInt()
+                            getConfig().getString("database.host"),
+                            getConfig().getString("database.database"),
+                            getConfig().getInt("database.port"),
+                            getConfig().getString("database.user"),
+                            getConfig().getString("database.pass"),
+                            getConfig().getBoolean("database.ssl"),
+                            getConfig().getBoolean("database.verify-certificate"),
+                            getConfig().getInt("database.pool-size"),
+                            getConfig().getInt("database.max-lifetime")
                     )
             );
             database.init();
@@ -81,22 +86,23 @@ public class NeptuneCore {
             database = new SQLite(dataDirectory.toString());
             database.init();
         }
+
+
+        //In-Memory Cache
+        cache = new Cache(database);
     }
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent e) {
-        logger.info("Registering Events");
-        server.getEventManager().register(this, new ProxyJoinListener(this));
-        server.getEventManager().register(this, new ProxyPingListener(this));
-        server.getEventManager().register(this, new ServerSwitchListener(this));
 
+        instance = this;
+
+        logger.info("Registering Events");
+        registerCommands();
+        registerEvents();
         logger.info("Registering Commands");
-        registerCommand("message", new MessageCommand(), "msg");
-        registerCommand("reply", new ReplyCommand(), "r");
-        registerCommand("adminchat", new AdminChatCommand(), "ac");
-        registerCommand("staffchat", new StaffChatCommand(), "sc");
-        registerCommand("find", new FindCommand());
-        registerCommand("lobby", new LobbyCommand(this), "hub");
+
+
 
     }
 
@@ -109,12 +115,29 @@ public class NeptuneCore {
         manager.register(commandMeta, (Command) command);
     }
 
-    public ConfigurationNode getConfig() {
+    private void registerEvents() {
+        server.getEventManager().register(this, new PlayerChatListener(chatManager));
+        server.getEventManager().register(this, new ServerPingListener());
+        server.getEventManager().register(this, new PlayerJoinListener(this));
+    }
+
+    private void registerCommands() {
+        registerCommand("chat", new ChatChannelCommand(), "channel");
+        registerCommand("onlinestaff", new OnlineStaffCommand(), "staff");
+        registerCommand("friend", FriendCommand.createCommand(server), "f");
+        registerCommand("maintenance", MaintenanceCommand.createCommand(server));
+    }
+
+    public YamlFile getConfig() {
         return configManager.getConfig();
     }
 
-    public ConfigurationNode getMessage() {
+    public YamlFile getMessage() {
         return configManager.getMessage();
+    }
+
+    public void saveConfig() {
+        configManager.saveConfig();
     }
 
 
@@ -132,5 +155,13 @@ public class NeptuneCore {
 
     public static NeptuneCore getInstance() {
         return instance;
+    }
+
+    public ChatManager getChatManager() {
+        return chatManager;
+    }
+
+    public Cache getCache() {
+        return cache;
     }
 }

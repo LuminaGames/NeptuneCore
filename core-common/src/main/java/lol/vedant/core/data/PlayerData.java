@@ -1,13 +1,15 @@
 package lol.vedant.core.data;
 
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 public class PlayerData {
 
+    private int playerId;
     private String name;
     private UUID uuid;
-    private UserSettings settings;
+    private Map<String, Object> settings;
     private List<Friend> friends;
 
     public String getName() {
@@ -26,11 +28,11 @@ public class PlayerData {
         this.uuid = uuid;
     }
 
-    public UserSettings getSettings() {
+    public Map<String, Object> getSettings() {
         return settings;
     }
 
-    public void setSettings(UserSettings settings) {
+    public void setSettings(Map<String, Object> settings) {
         this.settings = settings;
     }
 
@@ -40,5 +42,13 @@ public class PlayerData {
 
     public void setFriends(List<Friend> friends) {
         this.friends = friends;
+    }
+
+    public int getPlayerId() {
+        return playerId;
+    }
+
+    public void setPlayerId(int playerId) {
+        this.playerId = playerId;
     }
 }

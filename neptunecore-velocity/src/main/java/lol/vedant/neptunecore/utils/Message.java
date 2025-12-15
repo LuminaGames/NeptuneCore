@@ -4,7 +4,7 @@ import com.velocitypowered.api.command.CommandSource;
 import lol.vedant.core.utils.CommonUtil;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.spongepowered.configurate.ConfigurationNode;
+import org.simpleyaml.configuration.file.YamlFile;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,6 +17,7 @@ public enum Message {
     HELP_1("GENERAL.HELP_1"),
     STAFF_ONLINE("GENERAL.ONLINE_STAFF"),
     NO_PLAYER_SPECIFIED("GENERAL.NO_PLAYER_SPECIFIED"),
+    NO_PERMISSION("GENERAL.NO_PERMISSION"),
 
     // Staff chat
     STAFF_CHAT_PREFIX("STAFF_CHAT.PREFIX"),
@@ -61,7 +62,7 @@ public enum Message {
     ALREADY_FRIENDS("FRIEND.ALREADY_FRIENDS"),
     NO_FRIENDS("FRIEND.NO_FRIENDS");
 
-    private static ConfigurationNode config;
+    private static YamlFile config;
     private final String path;
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
 
@@ -69,7 +70,7 @@ public enum Message {
         this.path = path;
     }
 
-    public static void setConfiguration(ConfigurationNode c) {
+    public static void setConfiguration(YamlFile c) {
         config = c;
     }
 
@@ -105,12 +106,12 @@ public enum Message {
             message = message.replace(String.valueOf(replacements[i]), String.valueOf(replacements[i + 1]));
         }
 
-        String prefix = config.node(PREFIX.path).getString();
-        String sc_prefix = config.node(STAFF_CHAT_PREFIX.path).getString();
-        String ac_prefix = config.node(ADMIN_CHAT_PREFIX.path).getString();
-        String msg_prefix = config.node(MESSAGE_PREFIX.path).getString();
-        String s_prefix = config.node(STAFF_PREFIX.path).getString();
-        String f_prefix = config.node(FRIEND_PREFIX.path).getString();
+        String prefix = config.getString(PREFIX.path);
+        String sc_prefix = config.getString(STAFF_CHAT_PREFIX.path);
+        String ac_prefix = config.getString(ADMIN_CHAT_PREFIX.path);
+        String msg_prefix = config.getString(MESSAGE_PREFIX.path);
+        String s_prefix = config.getString(STAFF_PREFIX.path);
+        String f_prefix = config.getString(FRIEND_PREFIX.path);
 
         return message
                 .replace("{prefix}", prefix != null && !prefix.isEmpty() ? prefix : "")
@@ -126,6 +127,6 @@ public enum Message {
     }
 
     public Component asComponent() {
-        return CommonUtil.mm(replace(config.node(this.path).getString()));
+        return CommonUtil.mm(replace(config.getString(this.path)));
     }
 }
