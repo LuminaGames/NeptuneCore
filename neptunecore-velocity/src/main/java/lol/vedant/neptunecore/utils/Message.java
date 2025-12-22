@@ -82,7 +82,7 @@ public enum Message {
     }
 
     private Component getMessageFromConfig(Object... replacements) {
-        Object value = config.node((Object[]) this.path.split("\\.")).raw();
+        Object value = config.get(this.path);
         String message;
         if (value == null) {
             message = "Neptune: message not found (" + this.path + ")";

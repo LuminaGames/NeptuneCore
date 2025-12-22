@@ -5,10 +5,6 @@ import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.core.utils.CommonUtil;
 import lol.vedant.neptunecore.NeptuneCore;
-import net.kyori.adventure.text.Component;
-import org.spongepowered.configurate.serialize.SerializationException;
-
-import java.util.List;
 
 public class PlayerJoinListener {
 
@@ -22,14 +18,10 @@ public class PlayerJoinListener {
     public void onPlayerJoin(ServerConnectedEvent e) {
         Player player = e.getPlayer();
 
-        if(plugin.getConfig().node("maintenance", "enabled").getBoolean()) {
-            try {
+        if(plugin.getConfig().getBoolean("maintenance.enabled")) {
             player.disconnect(CommonUtil.mm(
-                CommonUtil.fromList(NeptuneCore.getInstance().getConfig().node("maintenance", "kick-message").getList(String.class))
+                CommonUtil.fromList(NeptuneCore.getInstance().getConfig().getStringList("maintenance.kick-message"))
             ));
-            } catch (SerializationException ex) {
-                ex.printStackTrace();
-            }
             return;
         }
 
