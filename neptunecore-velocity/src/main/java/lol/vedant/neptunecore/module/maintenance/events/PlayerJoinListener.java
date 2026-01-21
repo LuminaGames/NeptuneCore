@@ -25,6 +25,5 @@ public class PlayerJoinListener {
             return;
         }
 
-        plugin.getCache().loadPlayerData(player);
     }
 }

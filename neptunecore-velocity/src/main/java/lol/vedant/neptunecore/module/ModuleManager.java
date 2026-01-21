@@ -21,7 +21,6 @@ public class ModuleManager {
                 new ChatModule(),
                 new MaintenanceModule(),
                 new SpyModule(),
-                new CacheModule(),
                 new StaffModule(),
                 new MessageModule()
         );
