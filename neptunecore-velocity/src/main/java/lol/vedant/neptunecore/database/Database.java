@@ -13,6 +13,8 @@ public interface Database {
 
     void init();
 
+    void createPlayer(UUID uuid, String name);
+
     Map<String, Object> getPlayerSettings(int playerId);
 
     void updatePlayerSettings(int playerId, Map<String, Object> settings);

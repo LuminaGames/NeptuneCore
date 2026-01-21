@@ -100,6 +100,18 @@ public class SQLite implements Database{
     }
 
     @Override
+    public void createPlayer(UUID uuid, String name) {
+        String sql = "INSERT INTO neptune_players (player_uuid, player_name) VALUES (?, ?)";
+        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+            ps.setString(1, uuid.toString());
+            ps.setString(2, name);
+            ps.execute();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public Map<String, Object> getPlayerSettings(int playerId) {
         String sql = "SELECT settings FROM neptune_settings WHERE player_id = ?;";
         Map<String, Object> settings = new HashMap<>();

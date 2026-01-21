@@ -16,7 +16,7 @@ import lol.vedant.neptunecore.database.Database;
 import lol.vedant.neptunecore.database.MySQL;
 import lol.vedant.neptunecore.database.SQLite;
 import lol.vedant.neptunecore.listener.PlayerDisconnectListener;
-import lol.vedant.neptunecore.module.maintenance.events.PlayerJoinListener;
+import lol.vedant.neptunecore.listener.PlayerJoinListener;
 import lol.vedant.neptunecore.listener.ServerPingListener;
 import lol.vedant.neptunecore.module.ModuleManager;
 import lol.vedant.neptunecore.utils.Message;
@@ -109,7 +109,7 @@ public class NeptuneCore {
     }
 
     private void registerEvents() {
-
+        server.getEventManager().register(this, new PlayerJoinListener());
         server.getEventManager().register(this, new ServerPingListener());
         server.getEventManager().register(this, new PlayerDisconnectListener(this));
     }

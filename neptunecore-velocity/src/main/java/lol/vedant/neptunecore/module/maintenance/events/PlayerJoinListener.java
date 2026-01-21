@@ -22,7 +22,6 @@ public class PlayerJoinListener {
             player.disconnect(CommonUtil.mm(
                 CommonUtil.fromList(NeptuneCore.getInstance().getConfig().getStringList("maintenance.kick-message"))
             ));
-            return;
         }
 
     }
