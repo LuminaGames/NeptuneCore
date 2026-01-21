@@ -1,4 +1,4 @@
-package lol.vedant.neptunecore.chat;
+package lol.vedant.neptunecore.module.chat;
 
 public enum Chat {
     STAFF_CHAT,

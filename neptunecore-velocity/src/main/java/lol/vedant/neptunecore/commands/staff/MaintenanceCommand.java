@@ -27,24 +27,19 @@ public class MaintenanceCommand {
                                 .executes(ctx -> {
                                     CommandSource source = ctx.getSource();
                                     String toggle = ctx.getArgument("toggle", String.class);
-                                    try {
 
-                                        if (toggle.equalsIgnoreCase("enable")) {
-                                            NeptuneCore.getInstance().getConfig().node("maintenance", "enabled").set(true);
-                                            source.sendMessage(CommonUtil.mm("<green>Maintenance has now been enabled."));
-                                        } else if (toggle.equalsIgnoreCase("disable")) {
-                                            NeptuneCore.getInstance().getConfig().node("maintenance", "enabled").set(false);
-                                            source.sendMessage(CommonUtil.mm("<red>Maintenance has now been disabled."));
-                                        } else {
-                                            source.sendMessage(CommonUtil.mm("Usage: /maintenance <enable|disable>"));
-                                            return 0;
-                                        }
-                                        NeptuneCore.getInstance().saveConfig();
-
-                                    } catch (SerializationException e) {
-                                        source.sendMessage(Component.text("Error updating maintenance settings."));
-                                        e.printStackTrace();
+                                    if (toggle.equalsIgnoreCase("enable")) {
+                                        NeptuneCore.getInstance().getConfig().set("maintenance.enabled", true);
+                                        source.sendMessage(CommonUtil.mm("<green>Maintenance has now been enabled."));
+                                    } else if (toggle.equalsIgnoreCase("disable")) {
+                                        NeptuneCore.getInstance().getConfig().set("maintenance.enabled", false);
+                                        source.sendMessage(CommonUtil.mm("<red>Maintenance has now been disabled."));
+                                    } else {
+                                        source.sendMessage(CommonUtil.mm("Usage: /maintenance <enable|disable>"));
+                                        return 0;
                                     }
+                                    NeptuneCore.getInstance().saveConfig();
+
                                     return Command.SINGLE_SUCCESS;
                                 })
                                 .build()

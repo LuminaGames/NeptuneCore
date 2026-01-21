@@ -1,4 +1,4 @@
-package lol.vedant.neptunecore.listener;
+package lol.vedant.neptunecore.module.maintenance.events;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
@@ -18,7 +18,7 @@ public class PlayerJoinListener {
     public void onPlayerJoin(ServerConnectedEvent e) {
         Player player = e.getPlayer();
 
-        if(plugin.getConfig().getBoolean("maintenance.enabled")) {
+        if(plugin.getConfig().getBoolean("maintenance.enabled") && !player.hasPermission("neptune.maintenance.bypass")) {
             player.disconnect(CommonUtil.mm(
                 CommonUtil.fromList(NeptuneCore.getInstance().getConfig().getStringList("maintenance.kick-message"))
             ));

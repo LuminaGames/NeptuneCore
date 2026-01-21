@@ -3,7 +3,7 @@ package lol.vedant.neptunecore.commands.staff;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.core.utils.CommonUtil;
-import lol.vedant.neptunecore.chat.Chat;
+import lol.vedant.neptunecore.module.chat.Chat;
 import lol.vedant.neptunecore.utils.Message;
 
 import java.util.Arrays;

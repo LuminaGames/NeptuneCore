@@ -13,25 +13,25 @@ GENERAL:
   NO_PLAYER_SPECIFIED: "<red>No player was specified."
 
 STAFF_CHAT:
-  PREFIX: "<gray>[<aqua><bold>SC<gray>]"
+  PREFIX: "<gray>[<aqua><bold>SC</bold><gray>]"
   FORMAT: "{sc_prefix} {player} <gray>: <white>{message}"
   TOGGLE_ON: "{sc_prefix} <green>Switched to staff chat channel"
   TOGGLE_OFF: "{sc_prefix} <green>Switched off staff chat"
 
 ADMIN_CHAT:
-  PREFIX: "<gray>[<red><bold>AC<gray>]"
+  PREFIX: "<gray>[<red><bold>AC</bold><gray>]"
   FORMAT: "{ac_prefix} {player} <gray>: <white>{message}"
   TOGGLE_ON: "{ac_prefix} <green>Switched to admin chat channel"
   TOGGLE_OFF: "{ac_prefix} <green>Switched off admin chat"
 
 PRIVATE_MESSAGE:
-  PREFIX: "<gray>[<gold><bold>MSG<gray>]"
+  PREFIX: "<gray>[<gold><bold>MSG</bold><gray>]"
   FORMAT: "{msg_prefix} <yellow>{player}<gray>: <white>{message}"
   NO_ONE_REPLY: "{msg_prefix} <red>There is no one to reply."
   OFFLINE_PLAYER: "{msg_prefix} <red>The player is not online."
 
 STAFF:
-  PREFIX: "<gray>[<aqua><bold>S<gray>]"
+  PREFIX: "<gray>[<aqua><bold>S</bold><gray>]"
   SERVER_SWITCH: "{s_prefix} <aqua>{player} <white>has joined <aqua>{targetServer} <white>from <aqua>{currentServer}"
   SERVER_JOIN: "{s_prefix} <aqua>{player} <white>has joined <aqua>{serverName}"
 
@@ -46,7 +46,7 @@ COMMAND_SPY:
   DISABLE: "{s_prefix} <red>Command spy disabled"
 
 FRIEND:
-  PREFIX: "<gray>[<aqua>F<gray>]"
+  PREFIX: "<gray>[<aqua>F</bold><gray>]"
   FRIEND_DONE: "{f_prefix} <gray>You are now friends with <aqua>{player}<gray>!"
   FRIEND_ACCEPT: "{f_prefix} <white>You have accepted <aqua>{player}'s<white> friend request"
   FRIEND_DENY: "{f_prefix} <white>You have denied <aqua>{player}'s friend request"
