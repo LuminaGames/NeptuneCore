@@ -31,7 +31,7 @@ public class ServerPingListener {
                 pingBuilder.samplePlayers();
             } else {
                 List<ServerPing.SamplePlayer> samplePlayers = hoverMessage.stream()
-                        .map(message -> new ServerPing.SamplePlayer(CommonUtil.cc(message), UUID.randomUUID()))
+                        .map(message -> new ServerPing.SamplePlayer(CommonUtil.mm(message).toString(), UUID.randomUUID()))
                         .toList();
                 pingBuilder.samplePlayers(samplePlayers.toArray(new ServerPing.SamplePlayer[0]));
             }
