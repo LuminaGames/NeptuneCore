@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.core.utils.CommonUtil;
 import lol.vedant.neptunecore.module.chat.Chat;
+import lol.vedant.neptunecore.module.chat.ChatManager;
 import lol.vedant.neptunecore.utils.Message;
 
 import java.util.Arrays;
@@ -52,8 +53,8 @@ public class ChatChannelCommand implements SimpleCommand {
             }
         }
 
-        playerChatChannels.put(player, chatChannel);
-        player.sendMessage(CommonUtil.mm("<green>You have switched to the <yellow>" + chatChannel.name().toLowerCase() + "</yellow> channel.</green>"));
+        ChatManager.setChatChannel(player.getUniqueId(), chatChannel);
+        player.sendMessage(CommonUtil.mm("<green>You have switched to the <yellow>" + chatChannel.name() + "</yellow> channel.</green>"));
     }
 
     @Override

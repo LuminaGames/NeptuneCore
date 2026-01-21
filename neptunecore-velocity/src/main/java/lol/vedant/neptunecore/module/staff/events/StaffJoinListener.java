@@ -8,8 +8,8 @@ import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.utils.Message;
 
 import java.util.UUID;
-import java.util.logging.Logger;
 
+import static lol.vedant.neptunecore.module.staff.StaffModule.onlineAdmins;
 import static lol.vedant.neptunecore.module.staff.StaffModule.onlineStaff;
 
 public class StaffJoinListener {
@@ -21,12 +21,13 @@ public class StaffJoinListener {
     public void onJoin(ServerConnectedEvent e) {
         Player player = e.getPlayer();
 
-        if(player.hasPermission("neptune.staff") && !onlineStaff.contains(player.getUniqueId())) {
-            Logger.getLogger("Neptune-Debug").info("Added " + player.getUsername() + " to staff list");
+        if(player.hasPermission("neptune.staff")) {
             onlineStaff.add(player.getUniqueId());
         }
 
-
+        if(player.hasPermission("neptune.admin")) {
+            onlineAdmins.add(player.getUniqueId());
+        }
 
         for (UUID uuid : onlineStaff) {
             Player staff = plugin.getServer().getPlayer(uuid).orElse(null);

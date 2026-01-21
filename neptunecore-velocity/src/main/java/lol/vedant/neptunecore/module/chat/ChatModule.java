@@ -14,12 +14,12 @@ public class ChatModule implements Module {
     public void enable() {
         //Require singed velocity plugin to enable on Velocity version 3.4.0+
         //plugin.getServer().getPluginManager().getPlugin("").isPresent()
-
+        //Add integration for LP ranks
         chatManager = new ChatManager();
         NeptuneCore.registerCommand("chat", new ChatChannelCommand(), "channel");
         //Add /sc and /ac commands
 
-        plugin.getServer().getEventManager().register(plugin, new PlayerChatListener(chatManager));
+        plugin.getServer().getEventManager().register(plugin, new PlayerChatListener());
     }
 
     @Override
@@ -30,5 +30,9 @@ public class ChatModule implements Module {
     @Override
     public String getName() {
         return "Server Chat";
+    }
+
+    public ChatManager getChatManager() {
+        return this.chatManager;
     }
 }
