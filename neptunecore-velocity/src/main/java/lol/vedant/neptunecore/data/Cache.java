@@ -23,13 +23,19 @@ public class Cache {
         data.setName(player.getUsername());
         data.setUuid(player.getUniqueId());
         data.setPlayerId(db.getPlayerId(player.getUniqueId()));
-        data.setFriends(db.getFriends(player.getUniqueId()));
+        data.setFriends(db.getFriends(data.getPlayerId()));
         data.setSettings(db.getPlayerSettings(data.getPlayerId()));
         playerData.put(player.getUniqueId(), data);
     }
 
     public void clearData(UUID uuid) {
         playerData.remove(uuid);
+    }
+
+    public void reloadFriends(Player player) {
+        PlayerData data = playerData.get(player.getUniqueId());
+        data.setFriends(db.getFriends(playerData.get(player.getUniqueId()).getPlayerId()));
+        playerData.put(player.getUniqueId(), data);
     }
 
     public PlayerData getData(UUID player) {

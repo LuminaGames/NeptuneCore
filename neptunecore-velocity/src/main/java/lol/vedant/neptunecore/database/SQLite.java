@@ -159,7 +159,7 @@ public class SQLite implements Database{
     }
 
     @Override
-    public boolean addFriendship(UUID player1, UUID player2) {
+    public boolean addFriendship(int player1, int player2) {
         String sql = """
             INSERT INTO neptune_friends (friend1_id, friend2_id)
             VALUES (
@@ -168,12 +168,11 @@ public class SQLite implements Database{
             )
             """;
 
-        List<UUID> ordered = orderUuids(player1, player2);
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, ordered.get(0).toString());
-            ps.setString(2, ordered.get(1).toString());
+            ps.setInt(1, player1);
+            ps.setInt(2, player2);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -182,7 +181,7 @@ public class SQLite implements Database{
     }
 
     @Override
-    public boolean removeFriendship(UUID player1, UUID player2) {
+    public boolean removeFriendship(int player1, int player2) {
         String sql = """
             DELETE FROM neptune_friends 
             WHERE (friend1_id = (SELECT player_id FROM neptune_players WHERE player_uuid = ?)
@@ -193,10 +192,10 @@ public class SQLite implements Database{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, player1.toString());
-            ps.setString(2, player2.toString());
-            ps.setString(3, player2.toString());
-            ps.setString(4, player1.toString());
+            ps.setInt(1, player1);
+            ps.setInt(2, player2);
+            ps.setInt(3, player2);
+            ps.setInt(4, player1);
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -205,7 +204,7 @@ public class SQLite implements Database{
     }
 
     @Override
-    public boolean createFriendRequest(UUID requester, UUID receiver) {
+    public boolean createFriendRequest(int requester, int receiver) {
         String sql = """
             INSERT INTO neptune_friend_requests (requester_id, receiver_id)
             VALUES (
@@ -216,8 +215,9 @@ public class SQLite implements Database{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, requester.toString());
-            ps.setString(2, receiver.toString());
+            ps.setInt(1, requester);
+            ps.setInt(2, receiver);
+
             return ps.executeUpdate() > 0;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -226,7 +226,25 @@ public class SQLite implements Database{
     }
 
     @Override
-    public List<FriendRequest> getFriendRequests(UUID receiverUuid) {
+    public void removeFriendRequest(int player1, int player2) {
+        String sql = "DELETE FROM neptune_friend_requests WHERE (requester_id = ? AND receiver_id = ?) OR (requester_id = ? AND receiver_id = ?)";
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+
+            ps.setInt(1, player1);
+            ps.setInt(2, player2);
+
+            ps.setInt(3, player2);
+            ps.setInt(4, player1);
+            ps.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<FriendRequest> getFriendRequests(int receiverId) {
         String sql = """
         SELECT sender.player_name AS sender_username,
                receiver.player_name AS receiver_username
@@ -240,7 +258,7 @@ public class SQLite implements Database{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, receiverUuid.toString());
+            ps.setInt(1, receiverId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
@@ -258,7 +276,7 @@ public class SQLite implements Database{
     }
 
     @Override
-    public List<Friend> getFriends(UUID playerUuid) {
+    public List<Friend> getFriends(int playerId) {
         String sql = """
         SELECT p1.player_name AS friend1_name,
                p2.player_name AS friend2_name,
@@ -274,12 +292,12 @@ public class SQLite implements Database{
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, playerUuid.toString());
+            ps.setInt(1, playerId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
                     // Determine which friend is the other player
-                    String friendName = rs.getString("friend1_name").equals(getPlayerName(playerUuid))
+                    String friendName = rs.getString("friend1_name").equals(getPlayerName(playerId))
                             ? rs.getString("friend2_name")
                             : rs.getString("friend1_name");
 
@@ -302,12 +320,12 @@ public class SQLite implements Database{
                 List.of(uuid2, uuid1);
     }
 
-    private String getPlayerName(UUID playerUuid) {
-        String sql = "SELECT player_name FROM neptune_players WHERE player_uuid = ?;";
+    private String getPlayerName(int playerId) {
+        String sql = "SELECT player_name FROM neptune_players WHERE player_id = ?;";
 
         try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-            ps.setString(1, playerUuid.toString());
+            ps.setInt(1, playerId);
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -338,6 +356,25 @@ public class SQLite implements Database{
             e.printStackTrace();
         }
 
+        return -1;
+    }
+
+    @Override
+    public int getPlayerId(String username) {
+        String sql = "SELECT player_id FROM neptune_players WHERE player_name = ?";
+
+        try {
+            PreparedStatement ps = connection.prepareStatement(sql);
+            ps.setString(1, username);
+
+            try(ResultSet rs = ps.executeQuery()) {
+                if(rs.next()) {
+                    return rs.getInt("player_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return -1;
     }
 

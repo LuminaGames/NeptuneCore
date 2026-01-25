@@ -55,8 +55,6 @@ public class NeptuneCore {
 
         logger.info("Starting Neptune Core (Velocity)");
         logger.info("Developed by Lumina Games");
-        //In-Memory Cache
-
     }
 
     @Subscribe
@@ -117,7 +115,7 @@ public class NeptuneCore {
     private void registerCommands() {
 
         registerCommand("onlinestaff", new OnlineStaffCommand(), "staff");
-        registerCommand("friend", FriendCommand.createCommand(server), "f");
+        registerCommand("friend", new FriendCommand());
 
     }
 

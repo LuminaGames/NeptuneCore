@@ -15,19 +15,24 @@ public interface Database {
 
     void createPlayer(UUID uuid, String name);
 
+    int getPlayerId(UUID uuid);
+
+    int getPlayerId(String username);
+
     Map<String, Object> getPlayerSettings(int playerId);
 
     void updatePlayerSettings(int playerId, Map<String, Object> settings);
 
-    boolean addFriendship(UUID player1, UUID player2);
+    boolean addFriendship(int player1, int player2);
 
-    boolean removeFriendship(UUID player1, UUID player2);
+    boolean removeFriendship(int player1, int player2);
 
-    boolean createFriendRequest(UUID requester, UUID receiver);
+    boolean createFriendRequest(int requester, int receiver);
 
-    List<FriendRequest> getFriendRequests(UUID receiverUuid);
+    void removeFriendRequest(int player1, int player2);
 
-    List<Friend> getFriends(UUID uuid);
+    List<FriendRequest> getFriendRequests(int receiverId);
 
-    int getPlayerId(UUID uuid);
+    List<Friend> getFriends(int playerId);
+
 }
