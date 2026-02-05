@@ -1,46 +1,23 @@
 package lol.vedant.core.data;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 public class UserSettings {
 
-    String username;
-    UUID uuid;
-    boolean personalMessageEnabled;
-    boolean friendRequestEnabled;
-    boolean partyInviteEnabled;
-    boolean hiddenStaff;
+    Map<Setting, String> userSettings = new HashMap<>();
 
-    public UserSettings(String username, UUID uuid, boolean personalMessageEnabled, boolean friendRequestEnabled, boolean partyInviteEnabled, boolean hiddenStaff) {
-        this.username = username;
-        this.uuid = uuid;
-        this.personalMessageEnabled = personalMessageEnabled;
-        this.friendRequestEnabled = friendRequestEnabled;
-        this.partyInviteEnabled = partyInviteEnabled;
-        this.hiddenStaff = hiddenStaff;
+    public String getSetting(Setting type) {
+        return userSettings.get(type);
     }
 
-    public String getUsername() {
-        return username;
+    public Map<Setting, String> getAllSettings() {
+        return userSettings;
     }
 
-    public UUID getUuid() {
-        return uuid;
+    public void setUserSettings(HashMap<Setting, String> settings) {
+        userSettings = settings;
     }
 
-    public boolean isPersonalMessageEnabled() {
-        return personalMessageEnabled;
-    }
-
-    public boolean isFriendRequestEnabled() {
-        return friendRequestEnabled;
-    }
-
-    public boolean isPartyInviteEnabled() {
-        return partyInviteEnabled;
-    }
-
-    public boolean isHiddenStaff() {
-        return hiddenStaff;
-    }
 }

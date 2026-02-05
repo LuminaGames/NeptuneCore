@@ -1,242 +1,86 @@
 package lol.vedant.neptunecore.database;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import lol.vedant.core.data.Friend;
 import lol.vedant.core.data.FriendRequest;
-import org.json.JSONObject;
+import lol.vedant.core.data.Setting;
+import lol.vedant.core.data.UserSettings;
+import lol.vedant.core.database.SQLiteUtils;
+import lol.vedant.neptunecore.NeptuneCore;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.*;
-import java.util.*;
+import java.nio.file.Path;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.UUID;
 
 @SuppressWarnings("ALL")
-public class SQLite implements Database{
-    private File dataDirectory;
-    private Connection connection;
+public class SQLite implements Database {
 
-    public SQLite(String dataDirectory) {
-        this.dataDirectory = new File(dataDirectory);
-
-        if(!this.dataDirectory.exists()) {
-            this.dataDirectory.mkdirs();
-        }
-        File dataFile = new File(dataDirectory, "data.db");
-
-        if(!dataFile.exists()) {
-            try {
-                dataFile.createNewFile();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        String url = "jdbc:sqlite:" + dataFile;
-
-        try {
-            Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection(url);
-        } catch (SQLException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-    }
+    Path databaseFile = NeptuneCore.getInstance().getDataFolder();
+    SQLiteUtils utils;
+    HikariDataSource dataSource;
 
     @Override
     public void init() {
-        String playersTable = "CREATE TABLE IF NOT EXISTS neptune_players ("
-                + "player_id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "player_uuid CHAR(36) UNIQUE NOT NULL,"
-                + "player_name VARCHAR(16) NOT NULL"
-                + ");";
 
-        String settingsTable = "CREATE TABLE IF NOT EXISTS neptune_settings (" +
-                "player_id INT NOT NULL PRIMARY KEY," +
-                "settings JSON NOT NULL," +
-                "FOREIGN KEY (player_id) REFERENCES neptune_players(player_id)" +
-                ");";
+        HikariConfig config = new HikariConfig();
 
-        String friendsTable = "CREATE TABLE IF NOT EXISTS neptune_friends ("
-                + "friend1_id INT NOT NULL,"
-                + "friend2_id INT NOT NULL,"
-                + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
-                + "PRIMARY KEY (friend1_id, friend2_id),"
-                + "FOREIGN KEY (friend1_id) REFERENCES neptune_players(player_id),"
-                + "FOREIGN KEY (friend2_id) REFERENCES neptune_players(player_id),"
-                + "CHECK (friend1_id < friend2_id)"
-                + ");";
+        config.setJdbcUrl("jdbc:sqlite:" + databaseFile.toAbsolutePath() + "/data.db");
+        config.setDriverClassName("org.sqlite.JDBC");
+        config.setMaximumPoolSize(1);
+        config.setPoolName("NeptuneCore-Pool");
 
-        String friendRequestsTable = "CREATE TABLE IF NOT EXISTS neptune_friend_requests ("
-                + "requester_id INT NOT NULL,"
-                + "receiver_id INT NOT NULL,"
-                + "created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,"
-                + "PRIMARY KEY (requester_id, receiver_id),"
-                + "FOREIGN KEY (requester_id) REFERENCES neptune_players(player_id),"
-                + "FOREIGN KEY (receiver_id) REFERENCES neptune_players(player_id)"
-                + ");";
+        String neptune_players = """
+                CREATE TABLE IF NOT EXISTS neptune_players (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    username TEXT,
+                    uuid TEXT UNIQUE
+                );
+                """;
+        String neptune_player_settings = """
+                CREATE TABLE IF NOT EXISTS neptune_player_settings (
+                    player_id INTEGER NOT NULL,
+                    type TEXT NOT NULL,
+                    value TEXT,
+                    PRIMARY KEY (player_id, type)
+                );
+                """;
+        String neptune_friends = """
+                CREATE TABLE IF NOT EXISTS neptune_friends (
+                    player_1 INTEGER NOT NULL,
+                    player_2 INTEGER NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    CHECK (player_1 < player_2),
+                    PRIMARY KEY (player_1, player_2)
+                );
+                """;
+        String neptune_friend_requests = """
+                CREATE TABLE IF NOT EXISTS neptune_friend_requests (
+                    sender INTEGER NOT NULL,
+                    receiver INTEGER NOT NULL,
+                    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+                    PRIMARY KEY (sender, receiver)
+                );
+                """;
 
-        String lastInteractionTable = "CREATE TABLE IF NOT EXISTS neptune_last_interactions ("
-                + "player_id INT PRIMARY KEY,"
-                + "last_interacted_with INT NOT NULL,"
-                + "FOREIGN KEY (player_id) REFERENCES neptune_players(player_id),"
-                + "FOREIGN KEY (last_interacted_with) REFERENCES neptune_players(player_id)"
-                + ");";
+        dataSource = new HikariDataSource(config);
+        this.utils = new SQLiteUtils(dataSource);
 
-        try {
-            Statement stmt = connection.createStatement();
-
-            stmt.execute(playersTable);
-            stmt.execute(settingsTable);
-            stmt.execute(friendsTable);
-            stmt.execute(friendRequestsTable);
-            stmt.execute(lastInteractionTable);
-
-            // Create indexes
-            createIndexIfNotExists(stmt, "neptune_players", "idx_neptune_players_uuid", "player_uuid");
-            createIndexIfNotExists(stmt, "neptune_players", "idx_neptune_players_name", "player_name");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public void createPlayer(UUID uuid, String name) {
-        String sql = "INSERT INTO neptune_players (player_uuid, player_name) VALUES (?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-            ps.setString(1, uuid.toString());
-            ps.setString(2, name);
-            ps.execute();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public Map<String, Object> getPlayerSettings(int playerId) {
-        String sql = "SELECT settings FROM neptune_settings WHERE player_id = ?;";
-        Map<String, Object> settings = new HashMap<>();
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, playerId);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    String json = rs.getString("settings");
-                    JSONObject jsonObject = new JSONObject(json);
-                    settings = jsonObject.toMap();
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return settings;
-    }
-
-    @Override
-    public void updatePlayerSettings(int playerId, Map<String, Object> settings) {
-        String sql = """
-        INSERT INTO neptune_settings (player_id, settings)
-        VALUES (?, ?)
-        ON DUPLICATE KEY UPDATE settings = ?;
-        """;
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            JSONObject jsonObject = new JSONObject(settings);
-            String json = jsonObject.toString();
-
-            ps.setInt(1, playerId);
-            ps.setString(2, json);
-            ps.setString(3, json);
-
-            int rowsAffected = ps.executeUpdate();
-            System.out.println("Rows affected: " + rowsAffected);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    public boolean addFriendship(int player1, int player2) {
-        String sql = """
-            INSERT INTO neptune_friends (friend1_id, friend2_id)
-            VALUES (
-                (SELECT player_id FROM neptune_players WHERE player_uuid = ?),
-                (SELECT player_id FROM neptune_players WHERE player_uuid = ?)
-            )
-            """;
-
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, player1);
-            ps.setInt(2, player2);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean removeFriendship(int player1, int player2) {
-        String sql = """
-            DELETE FROM neptune_friends 
-            WHERE (friend1_id = (SELECT player_id FROM neptune_players WHERE player_uuid = ?)
-            AND friend2_id = (SELECT player_id FROM neptune_players WHERE player_uuid = ?))
-            OR (friend1_id = (SELECT player_id FROM neptune_players WHERE player_uuid = ?)
-            AND friend2_id = (SELECT player_id FROM neptune_players WHERE player_uuid = ?))
-            """;
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, player1);
-            ps.setInt(2, player2);
-            ps.setInt(3, player2);
-            ps.setInt(4, player1);
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public boolean createFriendRequest(int requester, int receiver) {
-        String sql = """
-            INSERT INTO neptune_friend_requests (requester_id, receiver_id)
-            VALUES (
-                (SELECT player_id FROM neptune_players WHERE player_uuid = ?),
-                (SELECT player_id FROM neptune_players WHERE player_uuid = ?)
-            )
-            """;
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, requester);
-            ps.setInt(2, receiver);
-
-            return ps.executeUpdate() > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    @Override
-    public void removeFriendRequest(int player1, int player2) {
-        String sql = "DELETE FROM neptune_friend_requests WHERE (requester_id = ? AND receiver_id = ?) OR (requester_id = ? AND receiver_id = ?)";
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-
-            ps.setInt(1, player1);
-            ps.setInt(2, player2);
-
-            ps.setInt(3, player2);
-            ps.setInt(4, player1);
-            ps.executeUpdate();
+        try (Connection conn = dataSource.getConnection()) {
+            Statement stmt = conn.createStatement();
+            stmt.execute(neptune_players);
+            stmt.execute(neptune_friend_requests);
+            stmt.execute(neptune_friends);
+            stmt.execute(neptune_player_settings);
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -244,158 +88,235 @@ public class SQLite implements Database{
     }
 
     @Override
-    public List<FriendRequest> getFriendRequests(int receiverId) {
-        String sql = """
-        SELECT sender.player_name AS sender_username,
-               receiver.player_name AS receiver_username
-        FROM neptune_friend_requests fr
-        JOIN neptune_players sender ON fr.sender_id = sender.player_uuid
-        JOIN neptune_players receiver ON fr.receiver_id = receiver.player_uuid
-        WHERE fr.receiver_id = ?;
-        """;
-
-        List<FriendRequest> requests = new ArrayList<>();
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, receiverId);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    requests.add(new FriendRequest(
-                            rs.getString("sender_username"),
-                            rs.getString("receiver_username")
-                    ));
-                }
-            }
+    public void close() {
+        try(Connection conn = dataSource.getConnection()) {
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return requests;
     }
 
     @Override
-    public List<Friend> getFriends(int playerId) {
-        String sql = """
-        SELECT p1.player_name AS friend1_name,
-               p2.player_name AS friend2_name,
-               f.created_at
-        FROM neptune_friends f
-        JOIN neptune_players p1 ON f.friend1_id = p1.player_id
-        JOIN neptune_players p2 ON f.friend2_id = p2.player_id
-        JOIN neptune_players p ON (p.player_id = f.friend1_id OR p.player_id = f.friend2_id)
-        WHERE p.player_uuid = ?;
-        """;
+    public boolean exists(UUID player) {
+        String sql = "SELECT * FROM neptune_players WHERE uuid = ? LIMIT 1";
 
-        List<Friend> friends = new ArrayList<>();
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setInt(1, playerId);
-
-            try (ResultSet rs = ps.executeQuery()) {
-                while (rs.next()) {
-                    // Determine which friend is the other player
-                    String friendName = rs.getString("friend1_name").equals(getPlayerName(playerId))
-                            ? rs.getString("friend2_name")
-                            : rs.getString("friend1_name");
-
-                    friends.add(new Friend(
-                            friendName,
-                            rs.getTimestamp("created_at").toInstant()
-                    ));
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return friends;
+        return utils.query(
+                sql,
+                rs -> {
+                    try {
+                        return rs.next();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return false;
+                },
+                player.toString()
+        );
     }
 
-    private List<UUID> orderUuids(UUID uuid1, UUID uuid2) {
-        return uuid1.compareTo(uuid2) < 0 ?
-                List.of(uuid1, uuid2) :
-                List.of(uuid2, uuid1);
+    @Override
+    public void createPlayer(String username, UUID uuid) {
+        String sql = "INSERT INTO neptune_players (uuid, username) VALUES (?, ?)";
+        utils.update(sql, uuid, username);
     }
 
-    private String getPlayerName(int playerId) {
-        String sql = "SELECT player_name FROM neptune_players WHERE player_id = ?;";
+    @Override
+    public UserSettings getSettings(int playerId) {
+        String sql = "SELECT type, value FROM neptune_player_settings WHERE player_id = ?";
 
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
+        return utils.query(
+                sql,
+                rs -> {
+                    UserSettings settings = new UserSettings();
+                    HashMap<Setting, String> map = new HashMap<>();
 
-            ps.setInt(1, playerId);
+                    try {
+                        while (rs.next()) {
+                            Setting type = Setting.valueOf(rs.getString("type"));
+                            String value = rs.getString("value");
+                            map.put(type, value);
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getString("player_name");
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+                    settings.setUserSettings(map);
+                    return settings;
+                },
+                playerId
+        );
+    }
 
-        return "Unknown Player";
+    @Override
+    public void saveSetting(int id, Setting type, String value) {
+        String sql = "INSERT INTO neptune_player_settings (player_id, type, value) VALUES (?, ?, ?) ON CONFLICT(player_id, type) DO UPDATE SET value = excluded.value";
+        utils.update(sql, id, type.toString(), value);
     }
 
     @Override
     public int getPlayerId(UUID uuid) {
-        String sql = "SELECT player_uuid FROM neptune_players WHERE player_id = ?;";
-
-        try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-            ps.setString(1, uuid.toString());
-
-            try (ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT id FROM neptune_players WHERE uuid = ?";
+        return utils.query(sql, rs -> {
+            try {
                 if (rs.next()) {
-                    return rs.getInt("player_id");
+                    return rs.getInt("id");
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return -1;
+            return -1;
+        }, uuid);
     }
 
     @Override
     public int getPlayerId(String username) {
-        String sql = "SELECT player_id FROM neptune_players WHERE player_name = ?";
-
-        try {
-            PreparedStatement ps = connection.prepareStatement(sql);
-            ps.setString(1, username);
-
-            try(ResultSet rs = ps.executeQuery()) {
+        String sql = "SELECT id FROM neptune_players WHERE username = ?";
+        return utils.query(sql, rs -> {
+            try {
                 if(rs.next()) {
-                    return rs.getInt("player_id");
+                    return rs.getInt("id");
                 }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return -1;
+            return -1;
+        }, username);
     }
 
-    private void createIndexIfNotExists(Statement stmt, String tableName, String indexName, String columnName) throws SQLException {
-        // Check if the index exists using PRAGMA index_list
-        String checkIndexSql = String.format(
-                "SELECT 1 FROM pragma_index_list('%s') WHERE name = '%s';",
-                tableName, indexName
-        );
-
-        try (ResultSet rs = stmt.executeQuery(checkIndexSql)) {
-            if (!rs.next()) {
-                String createIndexSql = String.format(
-                        "CREATE INDEX %s ON %s(%s);",
-                        indexName, tableName, columnName
-                );
-                stmt.execute(createIndexSql);
-                System.out.println("Created index: " + indexName);
-            } else {
-                System.out.println("Index already exists: " + indexName);
+    @Override
+    public String getNameById(int playerId) {
+        String sql = "SELECT username FROM neptune_players WHERE id = ?";
+        return utils.query(sql, rs -> {
+            try {
+                if(rs.next()) {
+                    return rs.getString("username");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        }
+            return null;
+        }, playerId);
+    }
+
+    @Override
+    public String getNameByUUID(UUID uuid) {
+        String sql = "SELECT username FROM neptune_players WHERE uuid = ?";
+        return utils.query(sql, rs -> {
+            try {
+                if(rs.next()) {
+                    return rs.getString("username");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }, uuid.toString());
+    }
+
+    @Override
+    public List<Friend> getFriends(int playerId) {
+
+        String sql = """
+        SELECT
+            f.created_at,
+            p.username AS friend_name
+        FROM neptune_friends f
+        JOIN neptune_players p
+          ON p.id = CASE
+              WHEN f.player_1 = ? THEN f.player_2
+              ELSE f.player_1
+          END
+        WHERE f.player_1 = ? OR f.player_2 = ?
+        """;
+
+        return utils.query(
+                sql,
+                rs -> {
+                    List<Friend> friends = new ArrayList<>();
+                    try {
+                        while (rs.next()) {
+                            String createdAt = rs.getString("created_at");
+                            Instant instant = LocalDateTime
+                                    .parse(createdAt, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                                    .atZone(ZoneId.systemDefault())
+                                    .toInstant();
+
+                            friends.add(
+                                    new Friend(
+                                            rs.getString("friend_name"),
+                                            instant
+                                    )
+                            );
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return friends;
+                },
+                playerId, playerId, playerId
+        );
+    }
+
+    @Override
+    public void removeFriend(int playerId, int targetId) {
+        String sql = "DELETE FROM neptune_friends WHERE player_1 = ? AND player_2 = ? OR player_1 = ? AND player_2 = ?";
+        utils.update(sql, playerId, targetId, targetId, playerId);
+    }
+
+    @Override
+    public void addFriend(int playerId, int targetId) {
+        String sql = "INSERT INTO neptune_friends (player_1, player_2) VALUES (?, ?)";
+        int p1 = Math.min(playerId, targetId);
+        int p2 = Math.max(playerId, targetId);
+        utils.update(sql, p1, p2);
+    }
+
+    @Override
+    public List<FriendRequest> getFriendRequests(int playerId) {
+
+        String sql = """
+        SELECT
+            s.username AS sender_name,
+            r.username AS receiver_name
+        FROM neptune_friend_requests fr
+        JOIN neptune_players s ON s.id = fr.sender
+        JOIN neptune_players r ON r.id = fr.receiver
+        WHERE fr.receiver = ?
+        """;
+
+        return utils.query(
+                sql,
+                rs -> {
+                    List<FriendRequest> requests = new ArrayList<>();
+                    try {
+                        while (rs.next()) {
+                            requests.add(
+                                    new FriendRequest(
+                                            rs.getString("sender_name"),
+                                            rs.getString("receiver_name")
+                                    )
+                            );
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    return requests;
+                },
+                playerId
+        );
+    }
+
+
+    @Override
+    public void createFriendRequest(int sender, int receiver) {
+        String sql = "INSERT INTO neptune_friend_requests (sender, receiver) VALUES (?, ?)";
+        utils.update(sql, sender, receiver);
+
+    }
+
+    @Override
+    public void removeFriendRequest(int sender, int receiver) {
+        String sql = "DELETE FROM neptune_friend_requests WHERE sender = ? AND receiver = ?";
+        utils.update(sql, sender, receiver);
     }
 }

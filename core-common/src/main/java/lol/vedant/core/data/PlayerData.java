@@ -9,8 +9,9 @@ public class PlayerData {
     private int playerId;
     private String name;
     private UUID uuid;
-    private Map<String, Object> settings;
+    private Map<Setting, String> settings;
     private List<Friend> friends;
+    private List<FriendRequest> requests;
 
     public String getName() {
         return name;
@@ -28,11 +29,11 @@ public class PlayerData {
         this.uuid = uuid;
     }
 
-    public Map<String, Object> getSettings() {
+    public Map<Setting, String> getSettings() {
         return settings;
     }
 
-    public void setSettings(Map<String, Object> settings) {
+    public void setSettings(Map<Setting, String> settings) {
         this.settings = settings;
     }
 
@@ -44,11 +45,19 @@ public class PlayerData {
         this.friends = friends;
     }
 
+    public void setRequests(List<FriendRequest> requests) {
+        this.requests = requests;
+    }
+
     public int getPlayerId() {
         return playerId;
     }
 
     public void setPlayerId(int playerId) {
         this.playerId = playerId;
+    }
+
+    public List<FriendRequest> getRequests() {
+        return requests;
     }
 }

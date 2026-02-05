@@ -23,6 +23,7 @@ import lol.vedant.neptunecore.utils.Message;
 import org.simpleyaml.configuration.file.YamlFile;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.nio.file.Path;
 
 @Plugin(
@@ -85,7 +86,7 @@ public class NeptuneCore {
             database.init();
         } else {
             logger.info("Using SQLite Database");
-            database = new SQLite(dataFolder.toString());
+            database = new SQLite();
             database.init();
         }
 
@@ -94,7 +95,7 @@ public class NeptuneCore {
         registerEvents();
         logger.info("Registering Commands");
 
-        cache = new Cache(database);
+        cache = new Cache();
     }
 
     public static void registerCommand(String name, Object command, String... aliases) {

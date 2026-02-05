@@ -18,7 +18,7 @@ public class PlayerDisconnectListener {
         Player player = e.getPlayer();
 
         //Clear cache from server memory
-        plugin.getCache().clearData(player.getUniqueId());
+        plugin.getCache().remove(player);
     }
 
 }

@@ -15,11 +15,11 @@ public class PlayerJoinListener {
         Player player = e.getPlayer();
         Database database = plugin.getDatabase();
 
-        if(database.getPlayerId(player.getUniqueId()) == -1) {
-            database.createPlayer(player.getUniqueId(), player.getUsername());
+        if(!database.exists(player.getUniqueId())) {
+            database.createPlayer(player.getUsername(), player.getUniqueId());
         }
 
-        plugin.getCache().loadPlayerData(player);
+        plugin.getCache().loadData(player);
     }
 
 }
