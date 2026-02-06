@@ -1,4 +1,4 @@
 package lol.vedant.neptunecore.commands.player;
 
-public class MessageCommand {
+public class ToggleFriendRequests {
 }

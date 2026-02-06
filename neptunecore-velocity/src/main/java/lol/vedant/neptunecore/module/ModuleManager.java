@@ -1,5 +1,6 @@
 package lol.vedant.neptunecore.module;
 
+import lol.vedant.neptunecore.module.balancer.BalancerModule;
 import lol.vedant.neptunecore.module.chat.ChatModule;
 import lol.vedant.neptunecore.module.maintenance.MaintenanceModule;
 import lol.vedant.neptunecore.module.message.MessageModule;
@@ -20,7 +21,8 @@ public class ModuleManager {
                 new MaintenanceModule(),
                 new SpyModule(),
                 new StaffModule(),
-                new MessageModule()
+                new MessageModule(),
+                new BalancerModule()
         );
     }
 

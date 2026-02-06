@@ -6,6 +6,6 @@ public class ToggleMessages implements SimpleCommand {
 
     @Override
     public void execute(Invocation invocation) {
-
+        //TODO Add toggle setting for public messages
     }
 }

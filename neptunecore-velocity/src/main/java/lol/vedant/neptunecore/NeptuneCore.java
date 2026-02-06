@@ -9,6 +9,7 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lol.vedant.core.data.DatabaseSettings;
 import lol.vedant.neptunecore.commands.friend.FriendCommand;
+import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
 import lol.vedant.neptunecore.data.Cache;
@@ -116,7 +117,8 @@ public class NeptuneCore {
     private void registerCommands() {
 
         registerCommand("onlinestaff", new OnlineStaffCommand(), "staff");
-        registerCommand("friend", new FriendCommand());
+        registerCommand("friend", new FriendCommand(), "f");
+        registerCommand("maintenance", new MaintenanceCommand());
 
     }
 

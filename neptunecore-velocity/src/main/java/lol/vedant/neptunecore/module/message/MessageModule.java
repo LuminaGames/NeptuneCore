@@ -7,7 +7,7 @@ public class MessageModule implements Module {
 
     @Override
     public void enable() {
-
+        //TODO Implement Message module
     }
 
     @Override
