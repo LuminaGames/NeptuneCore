@@ -9,7 +9,7 @@ public class PlayerData {
     private int playerId;
     private String name;
     private UUID uuid;
-    private Map<Setting, String> settings;
+    private UserSettings settings;
     private List<Friend> friends;
     private List<FriendRequest> requests;
 
@@ -29,11 +29,11 @@ public class PlayerData {
         this.uuid = uuid;
     }
 
-    public Map<Setting, String> getSettings() {
+    public UserSettings getSettings() {
         return settings;
     }
 
-    public void setSettings(Map<Setting, String> settings) {
+    public void setSettings(UserSettings settings) {
         this.settings = settings;
     }
 

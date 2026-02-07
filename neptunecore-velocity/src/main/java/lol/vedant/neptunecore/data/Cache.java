@@ -22,7 +22,7 @@ public class Cache {
         data.setPlayerId(plugin.getDatabase().getPlayerId(player.getUniqueId()));
         data.setFriends(plugin.getDatabase().getFriends(data.getPlayerId()));
         data.setRequests(plugin.getDatabase().getFriendRequests(data.getPlayerId()));
-        data.setSettings(plugin.getDatabase().getSettings(data.getPlayerId()).getAllSettings());
+        data.setSettings(plugin.getDatabase().getSettings(data.getPlayerId()));
         playerData.put(player.getUniqueId(), data);
     }
 

@@ -48,18 +48,18 @@ public class FriendCommand implements SimpleCommand {
 
                 String targetName = args[1];
 
-                // Prevent self-friending
                 if (player.getUsername().equalsIgnoreCase(targetName)) {
                     Message.FRIEND_REQUEST_SELF.send(player);
                     return;
                 }
 
-                // Resolve UUID from name
                 int targetId = db.getPlayerId(targetName);
                 if (targetId == -1) {
                     Message.PLAYER_NOT_FOUND.send(player, "{player}", targetName);
                     return;
                 }
+
+                //TODO Add a check for checking if the receiver has friend requests enabled.
 
                 List<Friend> friends = plugin.getCache().getPlayerData(player.getUniqueId()).getFriends();
 

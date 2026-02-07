@@ -20,13 +20,9 @@ public class PlayerServerChooseListener {
     }
 
     @Subscribe
-    public void onPlayerKick(KickedFromServerEvent event) {
-        event.getServerKickReason().ifPresent(reason -> {
-            List<String> ignoredReasons = plugin.getConfig()
-                    .getStringList("ignored-reasons")
-                    .stream()
-                    .map(String::toLowerCase)
-                    .toList();
+    public void onPlayerKick(KickedFromServerEvent e) {
+        e.getServerKickReason().ifPresent(reason -> {
+            List<String> ignoredReasons = plugin.getConfig().getStringList("ignored-reasons");
 
             String reasonText = PlainTextComponentSerializer.plainText()
                     .serialize(reason)
@@ -38,11 +34,11 @@ public class PlayerServerChooseListener {
                 }
             }
 
-            RegisteredServer kickedFrom = event.getServer();
+            RegisteredServer kickedFrom = e.getServer();
 
-            BalancerModule.getBestServer(event.getPlayer())
+            BalancerModule.getBestServer(e.getPlayer())
                     .ifPresent(server ->
-                            event.setResult(
+                            e.setResult(
                                     KickedFromServerEvent.RedirectPlayer.create(server)
                             )
                     );
