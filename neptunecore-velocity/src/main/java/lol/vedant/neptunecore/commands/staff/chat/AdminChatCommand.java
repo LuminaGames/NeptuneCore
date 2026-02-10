@@ -25,15 +25,15 @@ public class AdminChatCommand implements SimpleCommand {
 
         if (args.length > 0) {
             String message = String.join(" ", args);
-            for (UUID uuid : StaffModule.onlineStaff) {
+            for (UUID uuid : StaffModule.onlineAdmins) {
                 Player target = plugin.getServer().getPlayer(uuid).orElse(null);
                 Message.ADMIN_CHAT_FORMAT.send(target, "{player}", player.getUsername(), "{message}", message);
             }
             return;
         }
 
-        ChatManager.setChatChannel(player.getUniqueId(), Chat.STAFF_CHAT);
-        Message.STAFF_CHAT_ON.send(player);
+        ChatManager.setChatChannel(player.getUniqueId(), Chat.ADMIN_CHAT);
+        Message.ADMIN_CHAT_ON.send(player);
     }
 
     @Override

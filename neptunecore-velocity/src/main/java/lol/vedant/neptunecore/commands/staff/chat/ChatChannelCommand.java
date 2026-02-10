@@ -82,7 +82,4 @@ public class ChatChannelCommand implements SimpleCommand {
         return invocation.source().hasPermission("neptune.staff") || invocation.source().hasPermission("neptune.admin");
     }
 
-    public Chat getPlayerChatChannel(Player player) {
-        return playerChatChannels.getOrDefault(player, Chat.PUBLIC_CHAT);
-    }
 }

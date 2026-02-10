@@ -28,11 +28,7 @@ public class RemoveLobbyCommand implements SimpleCommand {
                 lobbyServers.remove(s);
                 plugin.getConfig().set("lobby-servers", lobbyServers);
                 player.sendMessage(CommonUtil.mm("<green>Server was removed from lobby servers successfully"));
-                try {
-                    plugin.getConfig().save();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                NeptuneCore.getInstance().saveConfig();
             } else {
                 player.sendMessage(CommonUtil.mm("<yellow>This server is not set as lobby server. Use <aqua> /setlobby <yellow>to add this server."));
 

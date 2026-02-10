@@ -41,7 +41,7 @@ SOCIAL_SPY:
   DISABLE: "{s_prefix} <red>Social spy disabled"
 
 COMMAND_SPY:
-  FORMAT: "{s_prefix} <aqua>{sender}: <white>{command}"
+  FORMAT: "{s_prefix} <aqua>{sender}: <white>/{command}"
   ENABLE: "{s_prefix} <green>Command spy enabled!"
   DISABLE: "{s_prefix} <red>Command spy disabled"
 

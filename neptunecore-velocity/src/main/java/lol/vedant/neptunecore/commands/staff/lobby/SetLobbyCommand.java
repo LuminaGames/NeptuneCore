@@ -5,7 +5,6 @@ import com.velocitypowered.api.proxy.Player;
 import lol.vedant.core.utils.CommonUtil;
 import lol.vedant.neptunecore.NeptuneCore;
 
-import java.io.IOException;
 import java.util.List;
 
 public class SetLobbyCommand implements SimpleCommand {
@@ -30,11 +29,7 @@ public class SetLobbyCommand implements SimpleCommand {
                 lobbyServers.add(s);
                 plugin.getConfig().set("lobby-servers", lobbyServers);
                 player.sendMessage(CommonUtil.mm("<green>Server was added to lobby servers successfully"));
-                try {
-                    plugin.getConfig().save();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                NeptuneCore.getInstance().saveConfig();
             }
         });
     }

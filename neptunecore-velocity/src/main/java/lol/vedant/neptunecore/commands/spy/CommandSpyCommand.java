@@ -24,6 +24,6 @@ public class CommandSpyCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return SimpleCommand.super.hasPermission(invocation);
+        return invocation.source().hasPermission("neptune.staff");
     }
 }

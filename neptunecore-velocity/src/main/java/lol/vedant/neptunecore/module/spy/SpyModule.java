@@ -48,18 +48,21 @@ public class SpyModule implements Module {
 
     public static boolean toggleSocialSpy(UUID uuid) {
         if (socialSpy.contains(uuid)) {
-            return socialSpy.remove(uuid);
+            socialSpy.remove(uuid);
+            return false;
         } else {
-            return socialSpy.add(uuid);
+            socialSpy.add(uuid);
+            return true;
         }
     }
 
-
     public static boolean toggleCommandSpy(UUID uuid) {
         if (commandSpy.contains(uuid)) {
-            return commandSpy.remove(uuid);
+            commandSpy.remove(uuid);
+            return false;
         } else {
-            return commandSpy.add(uuid);
+            commandSpy.add(uuid);
+            return true;
         }
     }
 }
