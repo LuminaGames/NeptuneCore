@@ -39,10 +39,10 @@ public class SpyModule implements Module {
         }
     }
 
-    public static void sendMessageSpy(Player player, String message) {
+    public static void sendMessageSpy(Player player, Player receiver, String message) {
         for (UUID uuid : StaffModule.onlineStaff) {
             Player staff = plugin.getServer().getPlayer(uuid).orElse(null);
-            Message.SOCIAL_SPY.send(staff, "{sender}", player.getUsername(), "{command}", message);
+            Message.SOCIAL_SPY.send(staff, "{sender}", player.getUsername(), "{message}", message, "{receiver}", receiver.getUsername());
         }
     }
 

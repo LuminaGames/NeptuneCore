@@ -4,23 +4,24 @@ import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.command.CommandExecuteEvent;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.neptunecore.NeptuneCore;
+import lol.vedant.neptunecore.event.PlayerMessageEvent;
 import lol.vedant.neptunecore.module.spy.SpyModule;
-import lol.vedant.neptunecore.module.staff.StaffModule;
 
 public class SpyListener {
 
     NeptuneCore plugin = NeptuneCore.getInstance();
 
     @Subscribe
-    public void onPlayerChat(com.velocitypowered.api.event.player.PlayerChatEvent e) {
-        Player player = e.getPlayer();
+    public void onPlayerChat(PlayerMessageEvent e) {
+        Player sender = e.getSender();
+        Player receiver = e.getReceiver();
         String message = e.getMessage();
 
         //if (StaffModule.onlineStaff.contains(player.getUniqueId())) return;
 
         SpyModule.socialSpy.forEach(uuid ->
                 plugin.getServer().getPlayer(uuid).ifPresent(staff ->
-                        SpyModule.sendMessageSpy(player, message)
+                        SpyModule.sendMessageSpy(sender, receiver, message)
                 )
         );
 
