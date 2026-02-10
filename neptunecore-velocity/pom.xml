@@ -31,8 +31,8 @@
                 <configuration>
                     <relocations>
                         <relocation>
-                            <pattern>me.partlysunny.configurate</pattern>
-                            <shadedPattern>lol.vedant.libs.configurate</shadedPattern>
+                            <pattern>org.bstats</pattern>
+                            <shadedPattern>lol.vedant.libs.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
@@ -136,6 +136,12 @@
             <groupId>com.github.Carleslc.Simple-YAML</groupId>
             <artifactId>Simple-Yaml</artifactId>
             <version>1.8.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.bstats</groupId>
+            <artifactId>bstats-velocity</artifactId>
+            <version>3.1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>

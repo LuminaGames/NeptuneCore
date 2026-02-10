@@ -22,6 +22,8 @@ import lol.vedant.neptunecore.listener.PlayerJoinListener;
 import lol.vedant.neptunecore.listener.ServerPingListener;
 import lol.vedant.neptunecore.module.ModuleManager;
 import lol.vedant.neptunecore.utils.Message;
+import org.bstats.MetricsBase;
+import org.bstats.velocity.Metrics;
 import org.simpleyaml.configuration.file.YamlFile;
 import org.slf4j.Logger;
 
@@ -47,14 +49,16 @@ public class NeptuneCore {
 
     private final Path dataFolder;
     private Cache cache;
+    private final Metrics.Factory metricsFactory;
 
     private Database database;
 
     @Inject
-    public NeptuneCore(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+    public NeptuneCore(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, Metrics.Factory metricsFactory) {
         NeptuneCore.server = server;
         this.logger = logger;
         this.dataFolder = dataDirectory;
+        this.metricsFactory = metricsFactory;
 
         logger.info("Starting Neptune Core (Velocity)");
         logger.info("Developed by Lumina Games");
@@ -98,6 +102,7 @@ public class NeptuneCore {
         logger.info("Registering Commands");
 
         cache = new Cache();
+        Metrics metrics = metricsFactory.make(this, 21393);
     }
 
     public static void registerCommand(String name, Object command, String... aliases) {
