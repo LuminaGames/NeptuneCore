@@ -2,6 +2,7 @@ package lol.vedant.neptunecore.commands.player.message;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
+import lol.vedant.core.utils.CommonUtil;
 import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.module.message.MessageModule;
 import lol.vedant.neptunecore.utils.Message;
@@ -31,10 +32,10 @@ public class MessageCommand implements SimpleCommand {
             return;
         }
 
-        //if (target.equals(player)) {
-        //    player.sendMessage(Message.text("You cannot message yourself."));
-        //    return;
-        //}
+        if (target.equals(player)) {
+            player.sendMessage(CommonUtil.mm("<red>You cannot message yourself."));
+            return;
+        }
 
         String message = String.join(" ", java.util.Arrays.copyOfRange(args, 1, args.length));
 
