@@ -6,6 +6,7 @@ import com.velocitypowered.api.event.player.PlayerChooseInitialServerEvent;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.module.balancer.BalancerModule;
+import lol.vedant.neptunecore.utils.Message;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import java.util.List;
@@ -36,12 +37,11 @@ public class PlayerServerChooseListener {
 
             RegisteredServer kickedFrom = e.getServer();
 
-            BalancerModule.getBestServer(e.getPlayer())
-                    .ifPresent(server ->
-                            e.setResult(
-                                    KickedFromServerEvent.RedirectPlayer.create(server)
-                            )
-                    );
+            BalancerModule.getBestServer(e.getPlayer()).ifPresent(server -> {
+                e.setResult(KickedFromServerEvent.RedirectPlayer.create(server));
+                Message.FALLBACK_CONNECTION.send(e.getPlayer());
+            });
+
         });
     }
 

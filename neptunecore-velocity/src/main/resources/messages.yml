@@ -11,6 +11,7 @@ GENERAL:
     - ""
     - "<white>{staffList}"
   NO_PLAYER_SPECIFIED: "<red>No player was specified."
+  FALLBACK_CONNECTION: "{prefix} <red>The server you were connected is down. You have been connected to a fallback server."
 
 STAFF_CHAT:
   PREFIX: "<gray>[<aqua><bold>SC</bold><gray>]"

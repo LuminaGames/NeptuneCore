@@ -8,12 +8,12 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lol.vedant.core.data.DatabaseSettings;
-import lol.vedant.neptunecore.commands.NeptuneCommand;
 import lol.vedant.neptunecore.commands.friend.FriendCommand;
 import lol.vedant.neptunecore.commands.player.LobbyCommand;
+import lol.vedant.neptunecore.commands.player.message.MessageCommand;
+import lol.vedant.neptunecore.commands.player.message.ReplyCommand;
 import lol.vedant.neptunecore.commands.spy.CommandSpyCommand;
 import lol.vedant.neptunecore.commands.spy.SocialSpyCommand;
-import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
 import lol.vedant.neptunecore.commands.staff.chat.AdminChatCommand;
 import lol.vedant.neptunecore.commands.staff.chat.StaffChatCommand;
@@ -29,12 +29,10 @@ import lol.vedant.neptunecore.listener.PlayerJoinListener;
 import lol.vedant.neptunecore.listener.ServerPingListener;
 import lol.vedant.neptunecore.module.ModuleManager;
 import lol.vedant.neptunecore.utils.Message;
-import org.bstats.MetricsBase;
 import org.bstats.velocity.Metrics;
 import org.simpleyaml.configuration.file.YamlFile;
 import org.slf4j.Logger;
 
-import java.io.File;
 import java.nio.file.Path;
 
 @Plugin(
@@ -110,6 +108,7 @@ public class NeptuneCore {
 
         cache = new Cache();
         Metrics metrics = metricsFactory.make(this, 21393);
+
     }
 
     public static void registerCommand(String name, Object command, String... aliases) {
@@ -132,12 +131,14 @@ public class NeptuneCore {
         registerCommand("onlinestaff", new OnlineStaffCommand(), "staff");
         registerCommand("friend", new FriendCommand(), "f");
         registerCommand("lobby", new LobbyCommand(),"hub");
-        registerCommand("setlobby", new SetLobbyCommand(),"setlobby");
-        registerCommand("removelobby", new RemoveLobbyCommand(),"removelobby");
+        registerCommand("setlobby", new SetLobbyCommand());
+        registerCommand("removelobby", new RemoveLobbyCommand());
         registerCommand("staffchat", new StaffChatCommand(),"sc");
         registerCommand("adminchat", new AdminChatCommand(),"ac");
         registerCommand("commandspy", new CommandSpyCommand(),"cspy");
         registerCommand("socialspy", new SocialSpyCommand(),"sspy");
+        registerCommand("message", new MessageCommand(), "msg");
+        registerCommand("reply", new ReplyCommand(), "r");
 
     }
 
