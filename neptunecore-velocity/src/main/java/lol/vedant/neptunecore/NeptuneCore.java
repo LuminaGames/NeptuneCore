@@ -11,6 +11,8 @@ import lol.vedant.core.data.DatabaseSettings;
 import lol.vedant.neptunecore.commands.NeptuneCommand;
 import lol.vedant.neptunecore.commands.friend.FriendCommand;
 import lol.vedant.neptunecore.commands.player.LobbyCommand;
+import lol.vedant.neptunecore.commands.spy.CommandSpyCommand;
+import lol.vedant.neptunecore.commands.spy.SocialSpyCommand;
 import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
 import lol.vedant.neptunecore.commands.staff.chat.AdminChatCommand;
@@ -134,7 +136,8 @@ public class NeptuneCore {
         registerCommand("removelobby", new RemoveLobbyCommand(),"removelobby");
         registerCommand("staffchat", new StaffChatCommand(),"sc");
         registerCommand("adminchat", new AdminChatCommand(),"ac");
-
+        registerCommand("commandspy", new CommandSpyCommand(),"cspy");
+        registerCommand("socialspy", new SocialSpyCommand(),"sspy");
 
     }
 

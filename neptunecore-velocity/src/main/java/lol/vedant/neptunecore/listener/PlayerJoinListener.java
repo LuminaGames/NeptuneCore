@@ -5,6 +5,7 @@ import com.velocitypowered.api.event.connection.PostLoginEvent;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.database.Database;
+import lol.vedant.neptunecore.module.balancer.BalancerModule;
 
 public class PlayerJoinListener {
 
@@ -18,6 +19,8 @@ public class PlayerJoinListener {
         if(!database.exists(player.getUniqueId())) {
             database.createPlayer(player.getUsername(), player.getUniqueId());
         }
+
+        BalancerModule.getBestServer(player);
 
         plugin.getCache().loadData(player);
     }
