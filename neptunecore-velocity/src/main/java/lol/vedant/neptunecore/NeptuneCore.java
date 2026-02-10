@@ -13,6 +13,8 @@ import lol.vedant.neptunecore.commands.friend.FriendCommand;
 import lol.vedant.neptunecore.commands.player.LobbyCommand;
 import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
+import lol.vedant.neptunecore.commands.staff.chat.AdminChatCommand;
+import lol.vedant.neptunecore.commands.staff.chat.StaffChatCommand;
 import lol.vedant.neptunecore.commands.staff.lobby.RemoveLobbyCommand;
 import lol.vedant.neptunecore.commands.staff.lobby.SetLobbyCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
@@ -130,6 +132,8 @@ public class NeptuneCore {
         registerCommand("lobby", new LobbyCommand(),"hub");
         registerCommand("setlobby", new SetLobbyCommand(),"setlobby");
         registerCommand("removelobby", new RemoveLobbyCommand(),"removelobby");
+        registerCommand("staffchat", new StaffChatCommand(),"sc");
+        registerCommand("adminchat", new AdminChatCommand(),"ac");
 
 
     }

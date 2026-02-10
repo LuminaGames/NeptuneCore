@@ -10,7 +10,7 @@ import lol.vedant.neptunecore.utils.Message;
 
 import java.util.UUID;
 
-public class StaffChatCommand implements SimpleCommand {
+public class AdminChatCommand implements SimpleCommand {
 
     NeptuneCore plugin = NeptuneCore.getInstance();
 
@@ -27,7 +27,7 @@ public class StaffChatCommand implements SimpleCommand {
             String message = String.join(" ", args);
             for (UUID uuid : StaffModule.onlineStaff) {
                 Player target = plugin.getServer().getPlayer(uuid).orElse(null);
-                Message.STAFF_CHAT_FORMAT.send(target, "{player}", player.getUsername(), "{message}", message);
+                Message.ADMIN_CHAT_FORMAT.send(target, "{player}", player.getUsername(), "{message}", message);
             }
             return;
         }
@@ -38,6 +38,6 @@ public class StaffChatCommand implements SimpleCommand {
 
     @Override
     public boolean hasPermission(Invocation invocation) {
-        return invocation.source().hasPermission("neptune.staff");
+        return invocation.source().hasPermission("neptune.admin.chat");
     }
 }

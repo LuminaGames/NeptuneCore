@@ -1,4 +1,4 @@
-package lol.vedant.neptunecore.commands.staff;
+package lol.vedant.neptunecore.commands.staff.chat;
 
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
@@ -32,13 +32,17 @@ public class ChatChannelCommand implements SimpleCommand {
         String channelInput = args[0].toLowerCase();
         Chat chatChannel;
         switch (channelInput) {
-            case "normal" -> chatChannel = Chat.PUBLIC_CHAT;
+            case "normal" -> {
+                chatChannel = Chat.PUBLIC_CHAT;
+                player.sendMessage(CommonUtil.mm("<green>Switched to PUBLIC channel"));
+            }
             case "staff" -> {
                 if (!player.hasPermission("neptune.staff")) {
                     Message.NO_PERMISSION.send(player);
                     return;
                 }
                 chatChannel = Chat.STAFF_CHAT;
+                Message.STAFF_CHAT_ON.send(player);
             }
             case "admin" -> {
                 if (!player.hasPermission("neptune.admin")) {
@@ -46,6 +50,7 @@ public class ChatChannelCommand implements SimpleCommand {
                     return;
                 }
                 chatChannel = Chat.ADMIN_CHAT;
+                Message.ADMIN_CHAT_ON.send(player);
             }
             default -> {
                 player.sendMessage(CommonUtil.mm("<red>Invalid chat channel. Use: <yellow>normal, staff, admin</yellow></red>"));
