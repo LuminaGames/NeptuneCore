@@ -10,8 +10,11 @@ import com.velocitypowered.api.proxy.ProxyServer;
 import lol.vedant.core.data.DatabaseSettings;
 import lol.vedant.neptunecore.commands.NeptuneCommand;
 import lol.vedant.neptunecore.commands.friend.FriendCommand;
+import lol.vedant.neptunecore.commands.player.LobbyCommand;
 import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
+import lol.vedant.neptunecore.commands.staff.lobby.RemoveLobbyCommand;
+import lol.vedant.neptunecore.commands.staff.lobby.SetLobbyCommand;
 import lol.vedant.neptunecore.config.ConfigManager;
 import lol.vedant.neptunecore.data.Cache;
 import lol.vedant.neptunecore.database.Database;
@@ -124,6 +127,9 @@ public class NeptuneCore {
 
         registerCommand("onlinestaff", new OnlineStaffCommand(), "staff");
         registerCommand("friend", new FriendCommand(), "f");
+        registerCommand("lobby", new LobbyCommand(),"hub");
+        registerCommand("setlobby", new SetLobbyCommand(),"setlobby");
+        registerCommand("removelobby", new RemoveLobbyCommand(),"removelobby");
 
 
     }
