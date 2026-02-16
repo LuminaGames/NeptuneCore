@@ -1,0 +1,103 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  release:
+    name: Build & Publish
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: temurin
+          cache: maven
+
+      - name: Extract version from tag
+        id: vars
+        run: echo "VERSION=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Set Maven version
+        run: mvn -B versions:set -DnewVersion=${{ steps.vars.outputs.VERSION }} -DgenerateBackupPoms=false
+
+      - name: Build with Maven
+        run: mvn -B clean package --file pom.xml
+
+      # -------------------------
+      # Create GitHub Release
+      # -------------------------
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.vars.outputs.VERSION }}
+          name: Release ${{ steps.vars.outputs.VERSION }}
+          generate_release_notes: true
+          files: target/NeptuneCore-${{ steps.vars.outputs.VERSION }}.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # -------------------------
+      # Publish to Modrinth
+      # -------------------------
+      - name: Upload to Modrinth
+        uses: cloudnode-pro/modrinth-publish@v2
+        with:
+          token: ${{ secrets.MODRINTH_TOKEN }}
+          project: ${{ vars.MODRINTH_ID }}
+          name: NeptuneCore ${{ steps.vars.outputs.VERSION }}
+          version: ${{ steps.vars.outputs.VERSION }}
+          loaders: |
+            velocity
+          game-versions: |
+            1.8.x
+            1.9.x
+            1.10.x
+            1.11.x
+            1.12.x
+            1.13.x
+            1.14.x
+            1.15.x
+            1.16.x
+            1.17.x
+            1.18.x
+            1.19.x
+            1.20.x
+            1.21.x
+          files: target/NeptuneCore-${{ steps.vars.outputs.VERSION }}.jar
+
+      # -------------------------
+      # Discord Webhook
+      # -------------------------
+      - name: Notify Discord
+        if: success()
+        run: |
+          curl -H "Content-Type: application/json" \
+               -X POST \
+               -d '{
+                 "embeds": [{
+                   "title": "New Update | Neptune Core",
+                   "description": "Version: **${{ steps.vars.outputs.VERSION }}**",
+                   "color": 154959,
+                   "fields": [
+                     {
+                       "name": "GitHub",
+                       "value": "https://github.com/${{ github.repository }}/releases/tag/${{ steps.vars.outputs.VERSION }}",
+                       "inline": false
+                     },
+                     {
+                       "name": "Modrinth",
+                       "value": "https://modrinth.com/plugin/neptunecore",
+                       "inline": false
+                     }
+                   ]
+                 }]
+               }' \
+               ${{ secrets.DISCORD_WEBHOOK }}
