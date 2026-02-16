@@ -14,6 +14,7 @@ import lol.vedant.neptunecore.commands.player.message.MessageCommand;
 import lol.vedant.neptunecore.commands.player.message.ReplyCommand;
 import lol.vedant.neptunecore.commands.spy.CommandSpyCommand;
 import lol.vedant.neptunecore.commands.spy.SocialSpyCommand;
+import lol.vedant.neptunecore.commands.staff.FindCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
 import lol.vedant.neptunecore.commands.staff.chat.AdminChatCommand;
 import lol.vedant.neptunecore.commands.staff.chat.StaffChatCommand;
@@ -139,6 +140,7 @@ public class NeptuneCore {
         registerCommand("socialspy", new SocialSpyCommand(),"sspy");
         registerCommand("message", new MessageCommand(), "msg");
         registerCommand("reply", new ReplyCommand(), "r");
+        registerCommand("find", new FindCommand());
 
     }
 
