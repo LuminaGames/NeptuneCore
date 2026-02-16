@@ -3,7 +3,7 @@ name: Build & Optional Release
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   release:
@@ -66,7 +66,7 @@ jobs:
           tag_name: v${{ steps.version.outputs.VERSION }}
           name: Release v${{ steps.version.outputs.VERSION }}
           generate_release_notes: true
-          files: target/NeptuneCore-${{ steps.version.outputs.VERSION }}.jar
+          files: neptunecore-velocity/target/neptune-core-velocity-${{ steps.version.outputs.VERSION }}.jar
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
