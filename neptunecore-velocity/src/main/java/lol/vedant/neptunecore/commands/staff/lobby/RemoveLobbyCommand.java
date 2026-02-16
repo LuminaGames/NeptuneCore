@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.core.utils.CommonUtil;
 import lol.vedant.neptunecore.NeptuneCore;
+import lol.vedant.neptunecore.utils.Message;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,6 +20,11 @@ public class RemoveLobbyCommand implements SimpleCommand {
         }
 
         Player player = (Player) invocation.source();
+
+        if(!player.hasPermission("neptune.admin.lobby")) {
+            Message.NO_PERMISSION.send(player);
+            return;
+        }
 
         List<String> lobbyServers = plugin.getConfig().getStringList("lobby-servers");
 

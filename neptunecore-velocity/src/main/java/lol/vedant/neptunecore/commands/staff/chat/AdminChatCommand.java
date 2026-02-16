@@ -21,6 +21,11 @@ public class AdminChatCommand implements SimpleCommand {
             return;
         }
 
+        if(!player.hasPermission("neptune.admin.chat")) {
+            Message.NO_PERMISSION.send(player);
+            return;
+        }
+
         String[] args = invocation.arguments();
 
         if (args.length > 0) {

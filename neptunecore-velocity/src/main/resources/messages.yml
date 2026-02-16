@@ -12,6 +12,8 @@ GENERAL:
     - "<white>{staffList}"
   NO_PLAYER_SPECIFIED: "<red>No player was specified."
   FALLBACK_CONNECTION: "{prefix} <red>The server you were connected is down. You have been connected to a fallback server."
+  FIND_MESSAGE: "{prefix} <aqua>{player} <white>is connected to <aqua>{server}"
+  PLAYER_NOT_FOUND: "{prefix} <red>Player {player} not found."
 
 STAFF_CHAT:
   PREFIX: "<gray>[<aqua><bold>SC</bold><gray>]"
@@ -79,6 +81,5 @@ FRIEND:
   ACCEPTED: "{f_prefix}<green> {player} has accepted your friend request!"
   REMOVE_SUCCESS: "{f_prefix} <red>You have removed {player} from your friends."
   NO_PENDING: "{f_prefix}<gray> You have no pending friend requests."
-  PLAYER_NOT_FOUND: "{f_prefix} <red>Player {player} not found."
   RECEIVE_FRIEND_REQUESTS_ON: "{f_prefix} <green>You have enabled receiving friend requests"
   RECEIVE_FRIEND_REQUESTS_OFF: "{f_prefix} <red>You have disabled receiving friend requests"

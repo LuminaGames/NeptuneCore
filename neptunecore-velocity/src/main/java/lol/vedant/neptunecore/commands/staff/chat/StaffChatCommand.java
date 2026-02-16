@@ -21,6 +21,11 @@ public class StaffChatCommand implements SimpleCommand {
             return;
         }
 
+        if(!player.hasPermission("neptune.staff")) {
+            Message.NO_PERMISSION.send(player);
+            return;
+        }
+
         String[] args = invocation.arguments();
 
         if (args.length > 0) {

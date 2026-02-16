@@ -14,6 +14,11 @@ public class SocialSpyCommand implements SimpleCommand {
             return;
         }
 
+        if(!player.hasPermission("neptune.staff")) {
+            Message.NO_PERMISSION.send(player);
+            return;
+        }
+
         boolean toggle = SpyModule.toggleSocialSpy(player.getUniqueId());
 
         if(toggle) {

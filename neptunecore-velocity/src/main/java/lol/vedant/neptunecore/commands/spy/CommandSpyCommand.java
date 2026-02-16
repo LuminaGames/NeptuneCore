@@ -13,6 +13,12 @@ public class CommandSpyCommand implements SimpleCommand {
             Message.PLAYER_ONLY_COMMAND.send(invocation.source());
             return;
         }
+
+        if(!player.hasPermission("neptune.staff")) {
+            Message.NO_PERMISSION.send(player);
+            return;
+        }
+
         boolean toggle = SpyModule.toggleCommandSpy(player.getUniqueId());
 
         if(toggle) {

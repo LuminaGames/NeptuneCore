@@ -4,6 +4,7 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.ProxyServer;
 import lol.vedant.neptunecore.NeptuneCore;
+import lol.vedant.neptunecore.utils.Message;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
@@ -17,6 +18,11 @@ public class OnlineStaffCommand implements SimpleCommand {
     public void execute(Invocation invocation) {
         if (!(invocation.source() instanceof Player player)) {
             invocation.source().sendMessage(MiniMessage.miniMessage().deserialize("<red>Only players can use this command.</red>"));
+            return;
+        }
+
+        if(!player.hasPermission("neptune.staff")) {
+            Message.NO_PERMISSION.send(player);
             return;
         }
 

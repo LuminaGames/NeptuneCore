@@ -23,6 +23,11 @@ public class ChatChannelCommand implements SimpleCommand {
             return;
         }
 
+        if(!player.hasPermission("neptune.staff") || !player.hasPermission("neptune.admin")) {
+            Message.NO_PERMISSION.send(player);
+            return;
+        }
+
         String[] args = invocation.arguments();
         if (args.length < 1) {
             player.sendMessage(CommonUtil.mm("<yellow>Usage: /chat <normal|staff|admin></yellow>"));
