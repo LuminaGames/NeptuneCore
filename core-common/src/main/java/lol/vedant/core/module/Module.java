@@ -1,4 +1,4 @@
-package lol.vedant.neptunecore.module;
+package lol.vedant.core.module;
 
 public interface Module {
 

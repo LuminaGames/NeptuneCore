@@ -3,7 +3,7 @@ package lol.vedant.neptunecore.module.balancer;
 import com.velocitypowered.api.proxy.Player;
 import com.velocitypowered.api.proxy.server.RegisteredServer;
 import lol.vedant.neptunecore.NeptuneCore;
-import lol.vedant.neptunecore.module.Module;
+import lol.vedant.core.module.Module;
 import lol.vedant.neptunecore.module.balancer.events.PlayerServerChooseListener;
 
 import java.util.Comparator;

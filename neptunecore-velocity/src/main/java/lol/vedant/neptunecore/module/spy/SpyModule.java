@@ -2,7 +2,7 @@ package lol.vedant.neptunecore.module.spy;
 
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.neptunecore.NeptuneCore;
-import lol.vedant.neptunecore.module.Module;
+import lol.vedant.core.module.Module;
 import lol.vedant.neptunecore.module.spy.events.SpyListener;
 import lol.vedant.neptunecore.module.staff.StaffModule;
 import lol.vedant.neptunecore.utils.Message;

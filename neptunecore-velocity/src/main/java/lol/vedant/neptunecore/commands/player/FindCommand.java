@@ -1,4 +1,4 @@
-package lol.vedant.neptunecore.commands.staff;
+package lol.vedant.neptunecore.commands.player;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
@@ -15,7 +15,7 @@ public class FindCommand implements SimpleCommand {
         CommandSource sender = invocation.source();
         String[] args = invocation.arguments();
 
-        if(!sender.hasPermission("neptune.staff")) {
+        if(!sender.hasPermission("neptune.command.find")) {
             Message.NO_PERMISSION.send(sender);
             return;
         }

@@ -11,7 +11,8 @@ GENERAL:
     - ""
     - "&f{staffList}"
   NO_PLAYER_SPECIFIED: "&cNo player was specified."
-
+  FIND_MESSAGE: "{prefix} &b{player} &fis connected to &b{server}"
+  PLAYER_NOT_FOUND: "{prefix} &cPlayer {player} not found."
 STAFF_CHAT:
   PREFIX: "&7[&b&lSC&7]"
   FORMAT: "{sc_prefix} {player} &7: &f{message}"

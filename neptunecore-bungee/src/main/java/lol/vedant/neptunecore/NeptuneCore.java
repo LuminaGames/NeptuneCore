@@ -20,9 +20,12 @@ import net.md_5.bungee.config.Configuration;
 
 public final class NeptuneCore extends Plugin {
 
+    private static NeptuneCore instance;
+
     private ConfigManager configManager;
     private FriendManagerImpl friendManager;
     private Database database;
+
 
     @Override
     public void onEnable() {
@@ -46,6 +49,8 @@ public final class NeptuneCore extends Plugin {
         if(getConfig().getBoolean("metrics.enable-bstats")) {
             Metrics metrics = new Metrics(this, 21393);
         }
+
+        instance = this;
     }
 
     @Override
@@ -78,6 +83,9 @@ public final class NeptuneCore extends Plugin {
         getProxy().getPluginManager().registerListener(this, new ServerSwitchListener());
     }
 
+    public static NeptuneCore getInstance() {
+        return instance;
+    }
     public Configuration getConfig() {
         return configManager.getConfig();
     }

@@ -14,7 +14,7 @@ import lol.vedant.neptunecore.commands.player.message.MessageCommand;
 import lol.vedant.neptunecore.commands.player.message.ReplyCommand;
 import lol.vedant.neptunecore.commands.spy.CommandSpyCommand;
 import lol.vedant.neptunecore.commands.spy.SocialSpyCommand;
-import lol.vedant.neptunecore.commands.staff.FindCommand;
+import lol.vedant.neptunecore.commands.player.FindCommand;
 import lol.vedant.neptunecore.commands.staff.OnlineStaffCommand;
 import lol.vedant.neptunecore.commands.staff.chat.AdminChatCommand;
 import lol.vedant.neptunecore.commands.staff.chat.StaffChatCommand;

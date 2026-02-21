@@ -3,7 +3,7 @@ package lol.vedant.neptunecore.module.maintenance;
 import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.commands.staff.MaintenanceCommand;
 import lol.vedant.neptunecore.module.maintenance.events.PlayerJoinListener;
-import lol.vedant.neptunecore.module.Module;
+import lol.vedant.core.module.Module;
 
 public class MaintenanceModule implements Module {
     

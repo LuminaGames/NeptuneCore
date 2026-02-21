@@ -1,7 +1,7 @@
 package lol.vedant.neptunecore.module.staff;
 
 import lol.vedant.neptunecore.NeptuneCore;
-import lol.vedant.neptunecore.module.Module;
+import lol.vedant.core.module.Module;
 import lol.vedant.neptunecore.module.staff.events.StaffJoinListener;
 
 import java.util.Set;

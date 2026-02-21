@@ -74,5 +74,10 @@
             <version>1.21-R0.3-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>lol.vedant</groupId>
+            <artifactId>core-common</artifactId>
+            <version>1.0.0</version>
+        </dependency>
     </dependencies>
 </project>

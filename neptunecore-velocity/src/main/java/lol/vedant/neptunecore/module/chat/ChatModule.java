@@ -3,7 +3,7 @@ package lol.vedant.neptunecore.module.chat;
 import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.commands.staff.chat.ChatChannelCommand;
 import lol.vedant.neptunecore.module.chat.events.PlayerChatListener;
-import lol.vedant.neptunecore.module.Module;
+import lol.vedant.core.module.Module;
 
 public class ChatModule implements Module {
 

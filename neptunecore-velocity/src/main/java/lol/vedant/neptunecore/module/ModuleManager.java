@@ -1,5 +1,6 @@
 package lol.vedant.neptunecore.module;
 
+import lol.vedant.core.module.Module;
 import lol.vedant.neptunecore.module.balancer.BalancerModule;
 import lol.vedant.neptunecore.module.chat.ChatModule;
 import lol.vedant.neptunecore.module.maintenance.MaintenanceModule;
@@ -11,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public class ModuleManager {
+public class ModuleManager implements lol.vedant.core.module.ModuleManager {
 
     public final List<Module> modules = new ArrayList<>();
 

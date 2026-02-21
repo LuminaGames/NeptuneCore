@@ -3,7 +3,7 @@ package lol.vedant.neptunecore.module.message;
 import com.velocitypowered.api.proxy.Player;
 import lol.vedant.neptunecore.NeptuneCore;
 import lol.vedant.neptunecore.event.PlayerMessageEvent;
-import lol.vedant.neptunecore.module.Module;
+import lol.vedant.core.module.Module;
 import lol.vedant.neptunecore.utils.Message;
 
 import java.util.HashMap;
